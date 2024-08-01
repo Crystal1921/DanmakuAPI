@@ -2,11 +2,10 @@ package dev.xkmc.danmakuapi.init;
 
 import com.mojang.logging.LogUtils;
 import com.tterrag.registrate.providers.ProviderType;
-import dev.xkmc.danmakuapi.init.data.YHDamageTypes;
-import dev.xkmc.danmakuapi.init.data.YHLangData;
-import dev.xkmc.danmakuapi.init.registrate.YHDanmaku;
-import dev.xkmc.danmakuapi.init.registrate.YHEntities;
-import dev.xkmc.danmakuapi.init.registrate.YHItems;
+import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
+import dev.xkmc.danmakuapi.init.data.DanmakuLang;
+import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
+import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import net.minecraft.resources.ResourceLocation;
@@ -28,19 +27,18 @@ public class DanmakuAPI {
 
 	public static final SimpleEntry<CreativeModeTab> TAB =
 			REGISTRATE.buildModCreativeTab("danmaku_api", "Danmaku API",
-					e -> e.icon(YHItems.REIMU_SPELL::asStack));
+					e -> e.icon(DanmakuItems.REIMU_SPELL::asStack));
 
 	public DanmakuAPI() {
-		YHItems.register();
-		YHDanmaku.register();
-		YHEntities.register();
+		DanmakuItems.register();
+		DanmakuEntities.register();
 
-		REGISTRATE.addDataGenerator(ProviderType.LANG, YHLangData::genLang);
+		REGISTRATE.addDataGenerator(ProviderType.LANG, DanmakuLang::genLang);
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void gatherData(GatherDataEvent event) {
-		new YHDamageTypes(REGISTRATE).generate();
+		new DanmakuDamageTypes(REGISTRATE).generate();
 
 	}
 
