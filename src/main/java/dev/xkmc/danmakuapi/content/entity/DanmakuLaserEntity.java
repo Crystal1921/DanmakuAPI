@@ -1,6 +1,7 @@
 package dev.xkmc.danmakuapi.content.entity;
 
 import dev.xkmc.danmakuapi.api.IDanmakuEntity;
+import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.fastprojectileapi.collision.LaserHitHelper;
 import dev.xkmc.fastprojectileapi.entity.BaseLaser;
 import dev.xkmc.l2serial.serialization.codec.PacketCodec;
@@ -119,6 +120,22 @@ public class DanmakuLaserEntity extends BaseLaser implements IEntityWithComplexS
 		if (!level().isClientSide() && tickCount > life) {
 			discard();
 		}
+	}
+
+	@Override
+	public void setXRot(float pXRot) {
+		if (level().isClientSide()){
+			DanmakuAPI.LOGGER.trace("set X");
+		}
+		super.setXRot(pXRot);
+	}
+
+	@Override
+	public void setYRot(float pYRot) {
+		if (level().isClientSide()){
+			DanmakuAPI.LOGGER.trace("set Y");
+		}
+		super.setYRot(pYRot);
 	}
 
 	protected void danmakuMove() {

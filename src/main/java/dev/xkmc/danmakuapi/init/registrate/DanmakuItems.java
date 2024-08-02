@@ -92,7 +92,7 @@ public class DanmakuItems {
 				.item("spell_reimu", p -> new SpellItem(
 						p.stacksTo(1), ReimuSpell::new, true,
 						() -> DanmakuItems.Bullet.CIRCLE.get(DyeColor.RED).get()))
-				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/curio/" + ctx.getName())))
+				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
 				.lang("Reimu's Spellcard \"Innate Dream\"")
 				.register();
 

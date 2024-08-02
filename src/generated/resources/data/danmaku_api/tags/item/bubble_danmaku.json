@@ -1,0 +1,20 @@
+{
+  "values": [
+    "danmaku_api:white_bubble_danmaku",
+    "danmaku_api:orange_bubble_danmaku",
+    "danmaku_api:magenta_bubble_danmaku",
+    "danmaku_api:light_blue_bubble_danmaku",
+    "danmaku_api:yellow_bubble_danmaku",
+    "danmaku_api:lime_bubble_danmaku",
+    "danmaku_api:pink_bubble_danmaku",
+    "danmaku_api:gray_bubble_danmaku",
+    "danmaku_api:light_gray_bubble_danmaku",
+    "danmaku_api:cyan_bubble_danmaku",
+    "danmaku_api:purple_bubble_danmaku",
+    "danmaku_api:blue_bubble_danmaku",
+    "danmaku_api:brown_bubble_danmaku",
+    "danmaku_api:green_bubble_danmaku",
+    "danmaku_api:red_bubble_danmaku",
+    "danmaku_api:black_bubble_danmaku"
+  ]
+}

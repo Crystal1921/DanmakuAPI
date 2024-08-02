@@ -3,13 +3,13 @@ package dev.xkmc.danmakuapi.content.item;
 import dev.xkmc.danmakuapi.api.DanmakuBullet;
 import dev.xkmc.danmakuapi.api.DanmakuUseEvent;
 import dev.xkmc.danmakuapi.content.entity.ItemBulletEntity;
+import dev.xkmc.danmakuapi.content.render.ButterflyProjectileType;
+import dev.xkmc.danmakuapi.content.render.DoubleLayerProjectileType;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
-import dev.xkmc.danmakuapi.init.data.DanmakuLang;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
-import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
+import dev.xkmc.danmakuapi.init.data.DanmakuLang;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
-import dev.xkmc.fastprojectileapi.render.ButterflyProjectileType;
-import dev.xkmc.fastprojectileapi.render.DoubleLayerProjectileType;
+import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.fastprojectileapi.render.RenderableProjectileType;
 import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
 import net.minecraft.network.chat.Component;
@@ -68,7 +68,7 @@ public class DanmakuItem extends Item {
 	}
 
 	public int getDanmakuColor(ItemStack stack, int i) {
-		return i == 0 ? color.getFireworkColor() : 0xffffffff;
+		return i == 0 ? 0xff000000 | color.getFireworkColor() : 0xffffffff;
 	}
 
 	@Override

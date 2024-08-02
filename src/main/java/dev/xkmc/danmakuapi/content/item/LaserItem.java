@@ -3,11 +3,11 @@ package dev.xkmc.danmakuapi.content.item;
 import dev.xkmc.danmakuapi.api.DanmakuLaser;
 import dev.xkmc.danmakuapi.api.DanmakuUseEvent;
 import dev.xkmc.danmakuapi.content.entity.ItemLaserEntity;
+import dev.xkmc.danmakuapi.content.render.DoubleLayerLaserType;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
-import dev.xkmc.danmakuapi.init.data.DanmakuLang;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
+import dev.xkmc.danmakuapi.init.data.DanmakuLang;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
-import dev.xkmc.fastprojectileapi.render.DoubleLayerLaserType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -63,7 +63,7 @@ public class LaserItem extends Item {
 	}
 
 	public int getDanmakuColor(ItemStack stack, int i) {
-		return i == 0 ? color.getFireworkColor() : 0xffffffff;
+		return i == 0 ?  0xff000000 | color.getFireworkColor() : 0xffffffff;
 	}
 
 	@Override

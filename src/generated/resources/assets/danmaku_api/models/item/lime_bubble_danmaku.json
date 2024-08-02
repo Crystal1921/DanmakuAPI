@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "danmaku_api:item/danmaku/bubble",
+    "layer1": "danmaku_api:item/danmaku/bubble_overlay"
+  }
+}

@@ -2,6 +2,7 @@ package dev.xkmc.danmakuapi.init;
 
 import com.mojang.logging.LogUtils;
 import com.tterrag.registrate.providers.ProviderType;
+import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
 import dev.xkmc.danmakuapi.init.data.DanmakuLang;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
@@ -32,6 +33,7 @@ public class DanmakuAPI {
 	public DanmakuAPI() {
 		DanmakuItems.register();
 		DanmakuEntities.register();
+		DanmakuConfig.init();
 
 		REGISTRATE.addDataGenerator(ProviderType.LANG, DanmakuLang::genLang);
 	}
