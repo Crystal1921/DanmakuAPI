@@ -122,22 +122,6 @@ public class DanmakuLaserEntity extends BaseLaser implements IEntityWithComplexS
 		}
 	}
 
-	@Override
-	public void setXRot(float pXRot) {
-		if (level().isClientSide()){
-			DanmakuAPI.LOGGER.trace("set X");
-		}
-		super.setXRot(pXRot);
-	}
-
-	@Override
-	public void setYRot(float pYRot) {
-		if (level().isClientSide()){
-			DanmakuAPI.LOGGER.trace("set Y");
-		}
-		super.setYRot(pYRot);
-	}
-
 	protected void danmakuMove() {
 
 	}
