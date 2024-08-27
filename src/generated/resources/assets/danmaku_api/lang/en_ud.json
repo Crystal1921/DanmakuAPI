@@ -29,6 +29,7 @@
   "death.attack.danmaku.player": "%s oʇ ǝןʇʇɐq nʞɐɯuɐp ǝɥʇ ʇsoן %s",
   "entity.danmaku_api.item_danmaku": "nʞɐɯuɐᗡ ɯǝʇI",
   "entity.danmaku_api.item_laser": "ɹǝsɐꞀ ɯǝʇI",
+  "entity.danmaku_api.youkai": "ıɐʞnoʎ",
   "item.danmaku_api.black_ball_danmaku": "nʞɐɯuɐᗡ ןןɐᗺ ʞɔɐןᗺ",
   "item.danmaku_api.black_bubble_danmaku": "nʞɐɯuɐᗡ ǝןqqnᗺ ʞɔɐןᗺ",
   "item.danmaku_api.black_butterfly_danmaku": "nʞɐɯuɐᗡ ʎןɟɹǝʇʇnᗺ ʞɔɐןᗺ",
@@ -126,5 +127,6 @@
   "item.danmaku_api.yellow_circle_danmaku": "nʞɐɯuɐᗡ ǝןɔɹıƆ ʍoןןǝʎ",
   "item.danmaku_api.yellow_laser": "ɹǝsɐꞀ ʍoןןǝʎ",
   "item.danmaku_api.yellow_mentos_danmaku": "nʞɐɯuɐᗡ soʇuǝW ʍoןןǝʎ",
+  "item.danmaku_api.youkai_spawn_egg": "bbƎ uʍɐdS ıɐʞnoʎ",
   "itemGroup.danmaku_api.danmaku_api": "IԀⱯ nʞɐɯuɐᗡ"
 }

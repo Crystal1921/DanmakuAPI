@@ -29,6 +29,7 @@
   "death.attack.danmaku.player": "%s lost the danmaku battle to %s",
   "entity.danmaku_api.item_danmaku": "Item Danmaku",
   "entity.danmaku_api.item_laser": "Item Laser",
+  "entity.danmaku_api.youkai": "Youkai",
   "item.danmaku_api.black_ball_danmaku": "Black Ball Danmaku",
   "item.danmaku_api.black_bubble_danmaku": "Black Bubble Danmaku",
   "item.danmaku_api.black_butterfly_danmaku": "Black Butterfly Danmaku",
@@ -126,5 +127,6 @@
   "item.danmaku_api.yellow_circle_danmaku": "Yellow Circle Danmaku",
   "item.danmaku_api.yellow_laser": "Yellow Laser",
   "item.danmaku_api.yellow_mentos_danmaku": "Yellow Mentos Danmaku",
+  "item.danmaku_api.youkai_spawn_egg": "Youkai Spawn Egg",
   "itemGroup.danmaku_api.danmaku_api": "Danmaku API"
 }

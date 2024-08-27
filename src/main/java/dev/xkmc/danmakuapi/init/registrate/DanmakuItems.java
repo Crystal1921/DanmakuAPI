@@ -8,7 +8,7 @@ import dev.xkmc.danmakuapi.init.data.DanmakuTagGen;
 import dev.xkmc.danmakuapi.content.item.DanmakuItem;
 import dev.xkmc.danmakuapi.content.item.LaserItem;
 import dev.xkmc.danmakuapi.content.item.SpellItem;
-import dev.xkmc.danmakuapi.game.reimu.ReimuSpell;
+import dev.xkmc.danmakuapi.presets.game.reimu.ReimuSpell;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;

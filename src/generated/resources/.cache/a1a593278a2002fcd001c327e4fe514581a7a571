@@ -1,6 +1,6 @@
-// 1.21	2024-08-01T22:05:25.56312	Registrate Provider for danmaku_api [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider, Tags (mob_effect), Tags (attribute), Tags (enchantment), Tags (damage_type)]
-213c241afb2350788cfbe905fa3bf11ef02dc964 assets/danmaku_api/lang/en_ud.json
-d209abab0f404ca57e8a9e2a60a4d7604fe61a31 assets/danmaku_api/lang/en_us.json
+// 1.21.1	2024-08-27T15:27:18.056234	Registrate Provider for danmaku_api [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider, Tags (mob_effect), Tags (attribute), Tags (enchantment), Tags (damage_type)]
+efe9c998cc11121bb2dc3161cdd3b3e388521596 assets/danmaku_api/lang/en_ud.json
+1371d25e23f443256f0abdd87f5c52b91e750832 assets/danmaku_api/lang/en_us.json
 6409ab33d30ede9a69c597d25771ff2d6151a899 assets/danmaku_api/models/item/black_ball_danmaku.json
 d53fa85607d706bf4da038906a6b4bafa40fe49f assets/danmaku_api/models/item/black_bubble_danmaku.json
 28835530faf59f7e71d72c6bff7c18c56cd257d9 assets/danmaku_api/models/item/black_butterfly_danmaku.json
@@ -98,8 +98,10 @@ d53fa85607d706bf4da038906a6b4bafa40fe49f assets/danmaku_api/models/item/yellow_b
 f2b950b0b8579d7152822ccd1c3b583431ee1547 assets/danmaku_api/models/item/yellow_circle_danmaku.json
 b20adb95acd3b180541b18eeb57b5cdd3f2410a3 assets/danmaku_api/models/item/yellow_laser.json
 4c8936a246f74e451cc1cb383138ef3aace14db7 assets/danmaku_api/models/item/yellow_mentos_danmaku.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/danmaku_api/models/item/youkai_spawn_egg.json
 66ec693aa7931a0c5aeebae46f92f75e0640a1dd data/danmaku_api/damage_type/abyssal_danmaku.json
 18cfbbdd5866de5ec09baf265b0bb6f5424926e3 data/danmaku_api/damage_type/danmaku.json
+7a661902a58af438c73c7ee352d4dd63cbc6e8b8 data/danmaku_api/loot_table/entities/youkai.json
 af80a3462ddaaa079df8c38c7e3e524cebfd51df data/danmaku_api/tags/damage_type/danmaku.json
 e923eb63fa4def871d9670bc7349143bca431c8b data/danmaku_api/tags/item/ball_danmaku.json
 63dfe987cf6b8a3b1b9d4ad0fe607bae65bb4123 data/danmaku_api/tags/item/bubble_danmaku.json
