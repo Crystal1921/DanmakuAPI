@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "danmaku_api:item/danmaku/butterfly",
-    "layer1": "danmaku_api:item/danmaku/butterfly_overlay"
+    "layer0": "danmaku_api:item/bullet/butterfly"
   }
 }

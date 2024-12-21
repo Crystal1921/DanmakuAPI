@@ -9,9 +9,15 @@ import dev.xkmc.fastprojectileapi.render.ProjectileRenderer;
 import dev.xkmc.fastprojectileapi.render.RenderableProjectileType;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 
 public record DoubleLayerLaserType(ResourceLocation inner, ResourceLocation outer, int color)
 		implements RenderableProjectileType<DoubleLayerLaserType, DoubleLayerLaserType.Ins> {
+
+	@Override
+	public RenderLevelStageEvent.Stage stage() {
+		return RenderLevelStageEvent.Stage.AFTER_WEATHER;
+	}
 
 	@Override
 	public void start(MultiBufferSource buffer, Iterable<Ins> list) {

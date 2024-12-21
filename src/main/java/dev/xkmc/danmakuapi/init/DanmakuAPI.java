@@ -1,10 +1,7 @@
 package dev.xkmc.danmakuapi.init;
 
-import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import com.mojang.logging.LogUtils;
 import com.tterrag.registrate.providers.ProviderType;
-import dev.xkmc.danmakuapi.presets.touhoulittlemaid.TLMCompat;
-import dev.xkmc.danmakuapi.presets.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
 import dev.xkmc.danmakuapi.init.data.DanmakuLang;
@@ -14,13 +11,11 @@ import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeColor;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.slf4j.Logger;
 
@@ -34,35 +29,22 @@ public class DanmakuAPI {
 
 	public static final SimpleEntry<CreativeModeTab> TAB =
 			REGISTRATE.buildModCreativeTab("danmaku_api", "Danmaku API",
-					e -> e.icon(DanmakuItems.REIMU_SPELL::asStack));
+					e -> e.icon(() -> DanmakuItems.Bullet.CIRCLE.get(DyeColor.RED).asStack()));
 
 	public DanmakuAPI() {
 		DanmakuItems.register();
 		DanmakuEntities.register();
 		DanmakuConfig.init();
-
-		REGISTRATE.addDataGenerator(ProviderType.LANG, DanmakuLang::genLang);
-
-		if (ModList.get().isLoaded(TouhouLittleMaid.MOD_ID)) {
-			NeoForge.EVENT_BUS.register(TLMCompat.class);
-		}
-	}
-
-
-	@SubscribeEvent
-	public static void commonSetup(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> {
-			TouhouSpellCards.registerSpells();
-		});
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void gatherData(GatherDataEvent event) {
+		REGISTRATE.addDataGenerator(ProviderType.LANG, DanmakuLang::genLang);
 		new DanmakuDamageTypes(REGISTRATE).generate();
-
 	}
 
 	public static ResourceLocation loc(String id) {
 		return ResourceLocation.fromNamespaceAndPath(MODID, id);
 	}
+
 }

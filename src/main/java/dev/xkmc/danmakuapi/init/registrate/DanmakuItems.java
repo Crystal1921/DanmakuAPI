@@ -3,12 +3,10 @@ package dev.xkmc.danmakuapi.init.registrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.xkmc.danmakuapi.api.DanmakuBullet;
 import dev.xkmc.danmakuapi.api.DanmakuLaser;
-import dev.xkmc.danmakuapi.init.DanmakuAPI;
-import dev.xkmc.danmakuapi.init.data.DanmakuTagGen;
 import dev.xkmc.danmakuapi.content.item.DanmakuItem;
 import dev.xkmc.danmakuapi.content.item.LaserItem;
-import dev.xkmc.danmakuapi.content.item.SpellItem;
-import dev.xkmc.danmakuapi.presets.game.reimu.ReimuSpell;
+import dev.xkmc.danmakuapi.init.DanmakuAPI;
+import dev.xkmc.danmakuapi.init.data.DanmakuTagGen;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -22,6 +20,7 @@ public class DanmakuItems {
 		CIRCLE(1, 4), BALL(1, 4),
 		MENTOS(2, 6), BUBBLE(4, 8),
 		BUTTERFLY(1, 4),
+		SPARK(1,4), STAR(2,6),
 		;
 
 		public final String name;
@@ -53,7 +52,6 @@ public class DanmakuItems {
 			return name;
 		}
 
-
 	}
 
 	public enum Laser implements DanmakuLaser {
@@ -81,30 +79,16 @@ public class DanmakuItems {
 
 	}
 
-
-	public static final ItemEntry<SpellItem> REIMU_SPELL;
 	private static final ItemEntry<DanmakuItem>[][] DANMAKU;
 	private static final ItemEntry<LaserItem>[][] LASER;
 
 	static {
-
-		REIMU_SPELL = DanmakuAPI.REGISTRATE
-				.item("spell_reimu", p -> new SpellItem(
-						p.stacksTo(1), ReimuSpell::new, true,
-						() -> DanmakuItems.Bullet.CIRCLE.get(DyeColor.RED).get()))
-				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
-				.lang("Reimu's Spellcard \"Innate Dream\"")
-				.register();
-
 		DANMAKU = new ItemEntry[Bullet.values().length][DyeColor.values().length];
 		for (var t : Bullet.values()) {
 			for (var e : DyeColor.values()) {
 				var ent = DanmakuAPI.REGISTRATE
 						.item(e.getName() + "_" + t.name + "_danmaku", p -> new DanmakuItem(p.rarity(Rarity.RARE), t, e, t.size))
-						.model((ctx, pvd) -> pvd.generated(ctx,
-								pvd.modLoc("item/danmaku/" + t.name),
-								pvd.modLoc("item/danmaku/" + t.name + "_overlay")))
-						.color(() -> () -> (stack, i) -> ((DanmakuItem) stack.getItem()).getDanmakuColor(stack, i))
+						.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/bullet/" + t.name)))
 						.tag(t.tag)
 						.register();
 				DANMAKU[t.ordinal()][e.ordinal()] = ent;

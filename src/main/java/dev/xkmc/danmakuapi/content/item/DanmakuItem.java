@@ -5,6 +5,7 @@ import dev.xkmc.danmakuapi.api.DanmakuUseEvent;
 import dev.xkmc.danmakuapi.content.entity.ItemBulletEntity;
 import dev.xkmc.danmakuapi.content.render.ButterflyProjectileType;
 import dev.xkmc.danmakuapi.content.render.DoubleLayerProjectileType;
+import dev.xkmc.danmakuapi.content.render.SimpleProjectileType;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.danmakuapi.init.data.DanmakuLang;
@@ -82,6 +83,11 @@ public class DanmakuItem extends Item {
 
 	public RenderableProjectileType<?, ?> getTypeForRender() {
 		if (render == null) {
+			if (true) {
+				render = new SimpleProjectileType(DanmakuAPI.loc("textures/item/bullet/" + type.getName() + ".png"),
+						type == DanmakuItems.Bullet.BUBBLE);
+				return render;
+			}
 			if (type == DanmakuItems.Bullet.BUTTERFLY) {
 				render = new ButterflyProjectileType(
 						DanmakuAPI.loc("textures/item/danmaku/" + type.getName() + ".png"),

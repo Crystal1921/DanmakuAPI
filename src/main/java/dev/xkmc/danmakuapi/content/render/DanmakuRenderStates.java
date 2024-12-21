@@ -31,6 +31,8 @@ public abstract class DanmakuRenderStates extends RenderType {
 							.setCullState(NO_CULL)
 							.createCompositeState(false)));
 
+
+
 	private static final Function<ResourceLocation, RenderType> LASER = Util.memoize((rl) ->
 			create("laser_solid",
 					DefaultVertexFormat.POSITION_TEX_COLOR,

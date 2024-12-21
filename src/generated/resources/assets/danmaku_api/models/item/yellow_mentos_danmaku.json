@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "danmaku_api:item/danmaku/mentos",
-    "layer1": "danmaku_api:item/danmaku/mentos_overlay"
+    "layer0": "danmaku_api:item/bullet/mentos"
   }
 }

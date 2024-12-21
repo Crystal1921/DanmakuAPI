@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "danmaku_api:item/danmaku/circle",
-    "layer1": "danmaku_api:item/danmaku/circle_overlay"
+    "layer0": "danmaku_api:item/bullet/circle"
   }
 }
