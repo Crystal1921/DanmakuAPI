@@ -5,6 +5,7 @@ import dev.xkmc.danmakuapi.api.DanmakuBullet;
 import dev.xkmc.danmakuapi.api.DanmakuLaser;
 import dev.xkmc.danmakuapi.content.item.DanmakuItem;
 import dev.xkmc.danmakuapi.content.item.LaserItem;
+import dev.xkmc.danmakuapi.content.render.DisplayType;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.data.DanmakuTagGen;
 import net.minecraft.tags.TagKey;
@@ -17,20 +18,25 @@ import java.util.Locale;
 public class DanmakuItems {
 
 	public enum Bullet implements DanmakuBullet {
-		CIRCLE(1, 4), BALL(1, 4),
-		MENTOS(2, 6), BUBBLE(4, 8),
-		BUTTERFLY(1, 4),
-		SPARK(1,4), STAR(2,6),
+		CIRCLE(1, 4, DisplayType.SOLID),
+		BALL(1, 4, DisplayType.SOLID),
+		MENTOS(2, 6, DisplayType.SOLID),
+		BUBBLE(4, 8, DisplayType.ADDITIVE),
+		BUTTERFLY(1, 4, DisplayType.TRANSPARENT),
+		SPARK(1, 4, DisplayType.SOLID),
+		STAR(2, 6, DisplayType.TRANSPARENT),
 		;
 
 		public final String name;
 		public final TagKey<Item> tag;
 		public final float size;
 		private final int damage;
+		private final DisplayType display;
 
-		Bullet(float size, int damage) {
+		Bullet(float size, int damage, DisplayType display) {
 			this.size = size;
 			this.damage = damage;
+			this.display = display;
 			name = name().toLowerCase(Locale.ROOT);
 			tag = DanmakuTagGen.item(name + "_danmaku");
 		}
@@ -50,6 +56,11 @@ public class DanmakuItems {
 		@Override
 		public String getName() {
 			return name;
+		}
+
+		@Override
+		public DisplayType display() {
+			return display;
 		}
 
 	}
@@ -88,7 +99,7 @@ public class DanmakuItems {
 			for (var e : DyeColor.values()) {
 				var ent = DanmakuAPI.REGISTRATE
 						.item(e.getName() + "_" + t.name + "_danmaku", p -> new DanmakuItem(p.rarity(Rarity.RARE), t, e, t.size))
-						.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/bullet/" + t.name)))
+						.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/bullet/" + t.name + "/" + e.getName())))
 						.tag(t.tag)
 						.register();
 				DANMAKU[t.ordinal()][e.ordinal()] = ent;
@@ -101,8 +112,8 @@ public class DanmakuItems {
 				var ent = DanmakuAPI.REGISTRATE
 						.item(e.getName() + "_" + t.name, p -> new LaserItem(p.rarity(Rarity.RARE), t, e, 1))
 						.model((ctx, pvd) -> pvd.generated(ctx,
-								pvd.modLoc("item/danmaku/" + t.name),
-								pvd.modLoc("item/danmaku/" + t.name + "_overlay")))
+								pvd.modLoc("item/laser/" + t.name),
+								pvd.modLoc("item/laser/" + t.name + "_overlay")))
 						.color(() -> () -> (stack, i) -> ((LaserItem) stack.getItem()).getDanmakuColor(stack, i))
 						.tag(t.tag)
 						.register();

@@ -6,24 +6,20 @@ import com.mojang.math.Axis;
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
 import dev.xkmc.fastprojectileapi.render.ProjectileRenderHelper;
 import dev.xkmc.fastprojectileapi.render.ProjectileRenderer;
-import dev.xkmc.fastprojectileapi.render.RenderableProjectileType;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-public record ButterflyProjectileType(ResourceLocation colored, ResourceLocation overlay, int period, int color)
-		implements RenderableProjectileType<ButterflyProjectileType, ButterflyProjectileType.Ins> {
+public record ButterflyProjectileType(ResourceLocation overlay, DisplayType display, int period)
+		implements RenderableDanmakuType<ButterflyProjectileType, ButterflyProjectileType.Ins> {
 
 	@Override
 	public void start(MultiBufferSource buffer, Iterable<Ins> list) {
 		VertexConsumer vc;
-		vc = buffer.getBuffer(DanmakuRenderStates.danmaku(colored));
-		for (var e : list) {
-			e.tex(vc, color);
-		}
-		vc = buffer.getBuffer(DanmakuRenderStates.danmaku(overlay));
+		vc = buffer.getBuffer(DanmakuRenderStates.danmaku(overlay, display()));
 		for (var e : list) {
 			e.tex(vc, -1);
 		}
@@ -64,9 +60,9 @@ public record ButterflyProjectileType(ResourceLocation colored, ResourceLocation
 				x0 += 0.5f;
 				x1 += 0.5f;
 			}
-			vertex(vc, m4, m3, x0, 0, x0, 1, color);
-			vertex(vc, m4, m3, x1, 0, x1, 1, color);
 			vertex(vc, m4, m3, x1, 1, x1, 0, color);
+			vertex(vc, m4, m3, x1, 0, x1, 1, color);
+			vertex(vc, m4, m3, x0, 0, x0, 1, color);
 			vertex(vc, m4, m3, x0, 1, x0, 0, color);
 		}
 

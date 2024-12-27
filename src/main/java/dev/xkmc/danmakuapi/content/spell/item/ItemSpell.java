@@ -23,7 +23,7 @@ public class ItemSpell {
 	@SerialField
 	private UUID targetId;
 	@SerialField
-	Vec3 dir = new Vec3(1, 0, 0), targetPos;
+	public Vec3 dir = new Vec3(1, 0, 0), targetPos;
 
 	private LivingEntity targetCache;
 

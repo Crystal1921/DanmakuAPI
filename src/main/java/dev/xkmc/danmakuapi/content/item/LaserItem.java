@@ -76,8 +76,8 @@ public class LaserItem extends Item {
 	public DoubleLayerLaserType getTypeForRender() {
 		if (render == null) {
 			render = new DoubleLayerLaserType(
-					DanmakuAPI.loc("textures/entities/laser_inner.png"),
-					DanmakuAPI.loc("textures/entities/laser_outer.png"),
+					DanmakuAPI.loc("textures/entity/laser/laser_inner.png"),
+					DanmakuAPI.loc("textures/entity/laser/laser_outer.png"),
 					0xff000000 | color.getFireworkColor());
 		}
 		return render;

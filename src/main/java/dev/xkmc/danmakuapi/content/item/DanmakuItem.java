@@ -4,7 +4,7 @@ import dev.xkmc.danmakuapi.api.DanmakuBullet;
 import dev.xkmc.danmakuapi.api.DanmakuUseEvent;
 import dev.xkmc.danmakuapi.content.entity.ItemBulletEntity;
 import dev.xkmc.danmakuapi.content.render.ButterflyProjectileType;
-import dev.xkmc.danmakuapi.content.render.DoubleLayerProjectileType;
+import dev.xkmc.danmakuapi.content.render.RotatingProjectileType;
 import dev.xkmc.danmakuapi.content.render.SimpleProjectileType;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
@@ -56,8 +56,9 @@ public class DanmakuItem extends Item {
 		if (!level.isClientSide) {
 			ItemBulletEntity danmaku = new ItemBulletEntity(DanmakuEntities.ITEM_DANMAKU.get(), player, level);
 			danmaku.setItem(stack);
-			danmaku.setup(type.damage(), 40, false, type.bypass(),
-					RayTraceUtil.getRayTerm(Vec3.ZERO, player.getXRot(), player.getYRot(), 2));
+			danmaku.setup(type.damage(), 1000, false, type.bypass(),
+					RayTraceUtil.getRayTerm(Vec3.ZERO, player.getXRot(), player.getYRot(), 0.01));
+			danmaku.moveTo(RayTraceUtil.getRayTerm(player.getEyePosition(), player.getXRot(), player.getYRot(), 2));
 			level.addFreshEntity(danmaku);
 		}
 		player.awardStat(Stats.ITEM_USED.get(this));
@@ -66,10 +67,6 @@ public class DanmakuItem extends Item {
 			stack.shrink(1);
 		}
 		return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
-	}
-
-	public int getDanmakuColor(ItemStack stack, int i) {
-		return i == 0 ? 0xff000000 | color.getFireworkColor() : 0xffffffff;
 	}
 
 	@Override
@@ -83,22 +80,13 @@ public class DanmakuItem extends Item {
 
 	public RenderableProjectileType<?, ?> getTypeForRender() {
 		if (render == null) {
-			if (true) {
-				render = new SimpleProjectileType(DanmakuAPI.loc("textures/item/bullet/" + type.getName() + ".png"),
-						type == DanmakuItems.Bullet.BUBBLE);
-				return render;
-			}
-			if (type == DanmakuItems.Bullet.BUTTERFLY) {
-				render = new ButterflyProjectileType(
-						DanmakuAPI.loc("textures/item/danmaku/" + type.getName() + ".png"),
-						DanmakuAPI.loc("textures/item/danmaku/" + type.getName() + "_overlay.png"),
-						20, 0xff000000 | color.getFireworkColor());
-			} else {
-				render = new DoubleLayerProjectileType(
-						DanmakuAPI.loc("textures/item/danmaku/" + type.getName() + ".png"),
-						DanmakuAPI.loc("textures/item/danmaku/" + type.getName() + "_overlay.png"),
-						0xff000000 | color.getFireworkColor());
-			}
+			var loc = DanmakuAPI.loc("textures/entity/bullet/" + type.getName() + "/" + color.getName() + ".png");
+			render = switch (type) {
+				case DanmakuItems.Bullet.BUTTERFLY -> new ButterflyProjectileType(loc, type.display(), 20);
+				case DanmakuItems.Bullet.SPARK -> new RotatingProjectileType(loc, type.display(), 20);
+				case DanmakuItems.Bullet.STAR -> new RotatingProjectileType(loc, type.display(), 40);
+				default -> new SimpleProjectileType(loc, type.display());
+			};
 		}
 		return render;
 	}

@@ -6,26 +6,19 @@ import com.mojang.math.Axis;
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
 import dev.xkmc.fastprojectileapi.render.ProjectileRenderHelper;
 import dev.xkmc.fastprojectileapi.render.ProjectileRenderer;
-import dev.xkmc.fastprojectileapi.render.RenderableProjectileType;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-public record SimpleProjectileType(ResourceLocation tex, boolean highlight)
-		implements RenderableProjectileType<SimpleProjectileType, SimpleProjectileType.Ins> {
-
-	@Override
-	public RenderLevelStageEvent.Stage stage() {
-		return RenderLevelStageEvent.Stage.AFTER_WEATHER;
-	}
+public record SimpleProjectileType(ResourceLocation tex, DisplayType display)
+		implements RenderableDanmakuType<SimpleProjectileType, SimpleProjectileType.Ins> {
 
 	@Override
 	public void start(MultiBufferSource buffer, Iterable<Ins> list) {
 		VertexConsumer vc;
-		vc = buffer.getBuffer(highlight ? DanmakuRenderStates.additive(tex) :
-				DanmakuRenderStates.transparent(tex));
+		vc = buffer.getBuffer(DanmakuRenderStates.danmaku(tex, display));
 		for (var e : list) {
 			e.tex(vc, -1);
 		}

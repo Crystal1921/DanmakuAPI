@@ -29,24 +29,24 @@ public record DoubleLayerLaserType(ResourceLocation inner, ResourceLocation oute
 				(int) ((color >> 8 & 0xff) * tran) << 8 |
 				(int) ((color >> 16 & 0xff) * tran) << 16 | 0xff000000;
 		VertexConsumer vc;
-		vc = buffer.getBuffer(DanmakuRenderStates.laser(inner));
+		vc = buffer.getBuffer(DanmakuRenderStates.laser(inner, DisplayType.SOLID));
 		for (var e : list) {
 			e.texInner(vc, -1);
 		}
 		if (ADDITIVE) {
-			vc = buffer.getBuffer(DanmakuRenderStates.additive(outer));
+			vc = buffer.getBuffer(DanmakuRenderStates.laser(outer, DisplayType.ADDITIVE));
 			for (var e : list) {
 				e.texOuter(false, vc, add);
 			}
 		}
 		if (INVERT) {
-			vc = buffer.getBuffer(DanmakuRenderStates.transparent(outer));
+			vc = buffer.getBuffer(DanmakuRenderStates.laser(outer, DisplayType.TRANSPARENT));
 			for (var e : list) {
 				e.texOuter(true, vc, col);
 			}
 		}
 		if (!ADDITIVE && !INVERT) {
-			vc = buffer.getBuffer(DanmakuRenderStates.transparent(outer));
+			vc = buffer.getBuffer(DanmakuRenderStates.laser(outer, DisplayType.TRANSPARENT));
 			for (var e : list) {
 				e.texOuter(false, vc, col);
 			}
