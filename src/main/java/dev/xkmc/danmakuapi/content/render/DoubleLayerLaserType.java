@@ -15,8 +15,13 @@ public record DoubleLayerLaserType(ResourceLocation inner, ResourceLocation oute
 		implements RenderableProjectileType<DoubleLayerLaserType, DoubleLayerLaserType.Ins> {
 
 	@Override
+	public int order() {
+		return 10;
+	}
+
+	@Override
 	public RenderLevelStageEvent.Stage stage() {
-		return RenderLevelStageEvent.Stage.AFTER_WEATHER;
+		return RenderLevelStageEvent.Stage.AFTER_PARTICLES;
 	}
 
 	@Override
@@ -98,9 +103,7 @@ public record DoubleLayerLaserType(ResourceLocation inner, ResourceLocation oute
 		}
 
 		private void addVertex(VertexConsumer vc, int color, int pY, float pX, float pZ, float pU, float pV) {
-			vc.addVertex(pose, pX, pY, pZ)
-					.setUv(pU, pV)
-					.setColor(color);
+			vc.addVertex(pose, pX, pY, pZ).setUv(pU, pV).setColor(color);
 		}
 
 	}
