@@ -28,6 +28,10 @@ public class DanmakuConfig {
 		public final ModConfigSpec.IntValue playerSpellCooldown;
 		public final ModConfigSpec.IntValue playerLaserDuration;
 
+		public final ModConfigSpec.IntValue customSpellMaxDuration;
+		public final ModConfigSpec.IntValue ringSpellDanmakuPerItemCost;
+		public final ModConfigSpec.IntValue homingSpellDanmakuPerItemCost;
+
 		Server(Builder builder) {
 			markL2();
 			playerDanmakuCooldown = builder.text("Player item cooldown for using danmaku")
@@ -38,6 +42,14 @@ public class DanmakuConfig {
 					.defineInRange("playerSpellCooldown", 40, 5, 1000);
 			playerLaserDuration = builder.text("Player laser duration")
 					.defineInRange("playerLaserDuration", 100, 5, 1000);
+
+			customSpellMaxDuration = builder.text("Max duration of custom spell allowed")
+					.defineInRange("customSpellMaxDuration", 1, 60, 1000);
+			ringSpellDanmakuPerItemCost = builder.text("Ring Spell: Max number of bullet allowed per item cost")
+					.defineInRange("ringSpellDanmakuPerItemCost", 32, 1, 1024);
+			homingSpellDanmakuPerItemCost = builder.text("Homing Spell: Max number of bullet allowed per item cost")
+					.defineInRange("homingSpellDanmakuPerItemCost", 8, 1, 1024);
+
 		}
 
 	}
