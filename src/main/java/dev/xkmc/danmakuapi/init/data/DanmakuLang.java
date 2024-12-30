@@ -77,7 +77,7 @@ public enum DanmakuLang {
 		pvd.add(DanmakuAPI.MODID + ".custom_spell.branchAngle.desc", "Horizontal angle difference between adjacent branches, in degree");
 		pvd.add(DanmakuAPI.MODID + ".custom_spell.stepAngle", "Step Angle Offset");
 		pvd.add(DanmakuAPI.MODID + ".custom_spell.stepAngle.desc", "Horizontal angle difference between adjacent steps, in degree");
-		pvd.add(DanmakuAPI.MODID + ".custom_spell.stepVerticalAngle", "Step Vertical Angle Offset");
+		pvd.add(DanmakuAPI.MODID + ".custom_spell.stepVerticalAngle", "Step Vertical Offset");
 		pvd.add(DanmakuAPI.MODID + ".custom_spell.stepVerticalAngle.desc", "Vertical angle difference between adjacent steps, in degree");
 		pvd.add(DanmakuAPI.MODID + ".custom_spell.randomizedAngle", "Angle Variation");
 		pvd.add(DanmakuAPI.MODID + ".custom_spell.randomizedAngle.desc", "Variation of bullet direction in degree, both horizontal and vertical, plus or minus");

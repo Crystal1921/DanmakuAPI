@@ -1,6 +1,6 @@
-// 1.21.1	2024-12-26T13:39:24.939927	Registrate Provider for danmaku_api [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider, Tags (mob_effect), Tags (attribute), Tags (enchantment), Tags (damage_type)]
-000df334ebe89da57bef368c13fa93479938e03d assets/danmaku_api/lang/en_ud.json
-3ee8d195f60c464d0f15fc2d8a4425fbb2365604 assets/danmaku_api/lang/en_us.json
+// 1.21.1	2024-12-30T09:43:23.725592	Registrate Provider for danmaku_api [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider, Tags (mob_effect), Tags (attribute), Tags (enchantment), Tags (damage_type)]
+e5c4c676ac25898b30c32d2362697436fa8c15be assets/danmaku_api/lang/en_ud.json
+8269215fede4001abb2d939725ff98f654563389 assets/danmaku_api/lang/en_us.json
 2ac1bab6f2275ec152d0000fbef6a68027674807 assets/danmaku_api/models/item/black_ball_danmaku.json
 b06781e7a6a40445c43483bcb60cce2f8e046f5b assets/danmaku_api/models/item/black_bubble_danmaku.json
 9ec789a392d786f4b50631c9194a5c69c57fef42 assets/danmaku_api/models/item/black_butterfly_danmaku.json
@@ -25,6 +25,8 @@ f085f44d17d6fcad5d0615e366d062bad2d6da78 assets/danmaku_api/models/item/brown_la
 a8bd1fe9a7673405f0fea665873f1271d79b3869 assets/danmaku_api/models/item/brown_mentos_danmaku.json
 acc2a36a45f00dcc644bbc6031c0e11aa9462ddb assets/danmaku_api/models/item/brown_spark_danmaku.json
 039eb98f9fe012317f640fbe9648634a6418ca2d assets/danmaku_api/models/item/brown_star_danmaku.json
+9851bb1e1118a690c368186d5d420b2e96e711b6 assets/danmaku_api/models/item/custom_spell_homing.json
+9851bb1e1118a690c368186d5d420b2e96e711b6 assets/danmaku_api/models/item/custom_spell_ring.json
 991c48ef2c2d0a997c57c4b4d99b037b99cbab60 assets/danmaku_api/models/item/cyan_ball_danmaku.json
 2de8f234a14684e8ae123d1858ed87b20682c745 assets/danmaku_api/models/item/cyan_bubble_danmaku.json
 312706a607c72490bb3348a813a5eeb1cba51dbf assets/danmaku_api/models/item/cyan_butterfly_danmaku.json
@@ -136,6 +138,7 @@ e923eb63fa4def871d9670bc7349143bca431c8b data/danmaku_api/tags/item/ball_danmaku
 63dfe987cf6b8a3b1b9d4ad0fe607bae65bb4123 data/danmaku_api/tags/item/bubble_danmaku.json
 47b945baffa2b7b5ba1ef14be1d41337b8b65115 data/danmaku_api/tags/item/butterfly_danmaku.json
 2ead7bae7f0525d4fd50d327e0a455ae1190cb81 data/danmaku_api/tags/item/circle_danmaku.json
+9137730639d356a7826bb632af097208980e4eff data/danmaku_api/tags/item/custom_spell.json
 bdce841a61072d9570eb1b87d6567a7ad1ca1a48 data/danmaku_api/tags/item/laser.json
 d1d34db0b30713ca5f0651ac4ca7c844678f2bac data/danmaku_api/tags/item/mentos_danmaku.json
 55e01ad639d90db5105af0d3f86b20d6432abd07 data/danmaku_api/tags/item/spark_danmaku.json

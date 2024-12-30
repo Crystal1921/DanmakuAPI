@@ -10,6 +10,7 @@ import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
+import dev.xkmc.l2core.init.reg.simple.Reg;
 import dev.xkmc.l2serial.network.PacketHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -27,13 +28,14 @@ public class DanmakuAPI {
 
 	public static final String MODID = "danmaku_api";
 	public static final Logger LOGGER = LogUtils.getLogger();
+	public static final Reg REG = new Reg(MODID);
 	public static final L2Registrate REGISTRATE = new L2Registrate(MODID);
 	public static final PacketHandler HANDLER = new PacketHandler(MODID, 1,
 			e -> e.create(SpellSetToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER)
 	);
 
 	public static final SimpleEntry<CreativeModeTab> TAB =
-			REGISTRATE.buildModCreativeTab("danmaku_api", "Danmaku API",
+			REGISTRATE.buildModCreativeTab("danmaku", "Spellcards & Danmaku",
 					e -> e.icon(() -> DanmakuItems.Bullet.CIRCLE.get(DyeColor.RED).asStack()));
 
 	public DanmakuAPI() {

@@ -57,6 +57,7 @@ public record PlayerHolder(
 		ItemBulletEntity danmaku = new ItemBulletEntity(DanmakuEntities.ITEM_DANMAKU.get(), player, player.level());
 		danmaku.setItem(type.get(color).asStack());
 		danmaku.setup(type.damage(), life, true, true, vec);
+		danmaku.setPos(center());
 		return danmaku;
 	}
 

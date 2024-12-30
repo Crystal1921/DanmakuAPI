@@ -9,49 +9,55 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.options.OptionsSubScreen;
 import net.minecraft.network.chat.Component;
 
-public class EditorScreen extends Screen {
+public class EditorScreen extends OptionsSubScreen {
 
 	private final SpellOptionInstances<?> ins;
 	private Button cancel, reset, save;
 	private OptionsList list;
 
 
-	public EditorScreen(ISpellFormData<?> data) {
-		super(Component.literal(""));
+	public EditorScreen(Component title, ISpellFormData<?> data) {
+		super(null, null, title);
 		ins = SpellOptionInstances.create(Wrappers.cast(data));
 	}
 
+
 	@Override
 	protected void init() {
-		super.init();
-		int w = width / 4;
-		int dw = w / 4;
-		addRenderableWidget(cancel = new Button.Builder(
-				Component.translatable("gui.cancel"),
-				e -> onClose()
-		).pos(dw, height - 26).size(w, 20).build());
-		addRenderableWidget(reset = new Button.Builder(
-				DanmakuLang.EDITOR_RESET.get(),
-				e -> reset()
-		).pos(w + dw * 2, height - 26).size(w, 20).build());
-		addRenderableWidget(save = new Button.Builder(
-				Component.translatable("gui.done"),
-				e -> save()
-		).pos(w * 2 + dw * 3, height - 26).size(w, 20).build());
-
-		addOptions();
+		this.addTitle();
+		this.addFooter();
+		this.addContents();
+		this.layout.visitWidgets(this::addRenderableWidget);
+		this.repositionElements();
 	}
 
-	private void addOptions() {
-		list = new OptionsList(minecraft, width, height, 32, height - 32, 25);
-		list.setRenderBackground(false);
-		list.setRenderTopAndBottom(false);
+	protected void addOptions() {
 		ins.add(list, this::setChanged);
-		addRenderableWidget(list);
 		reset.active = false;
+	}
+
+	protected void addContents() {
+		this.list = this.layout.addToContents(new OptionsList(this.minecraft, this.width, this));
+		this.addOptions();
+	}
+
+	protected void addFooter() {
+		int w = width / 4;
+		layout.addToFooter(cancel = new Button.Builder(
+				Component.translatable("gui.cancel"),
+				e -> onClose()
+		).size(w, 20).build(), e -> e.align(0.1F, 0.5F));
+		layout.addToFooter(reset = new Button.Builder(
+				DanmakuLang.EDITOR_RESET.get(),
+				e -> reset()
+		).size(w, 20).build(), e -> e.align(0.5F, 0.5F));
+		layout.addToFooter(save = new Button.Builder(
+				Component.translatable("gui.done"),
+				e -> save()
+		).size(w, 20).build(), e -> e.align(0.9F, 0.5F));
 	}
 
 	private void setChanged() {
@@ -88,7 +94,7 @@ public class EditorScreen extends Screen {
 
 	@Override
 	public void render(GuiGraphics g, int mx, int my, float pTick) {
-		renderBackground(g);
+		renderBackground(g, mx, my, pTick);
 		super.render(g, mx, my, pTick);
 	}
 

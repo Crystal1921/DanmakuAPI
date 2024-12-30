@@ -1,11 +1,13 @@
-package dev.xkmc.danmakuapi.content.spell.item;
+package dev.xkmc.danmakuapi.content.item;
 
 import dev.xkmc.danmakuapi.content.custom.data.ISpellFormData;
+import dev.xkmc.danmakuapi.content.custom.data.SpellDataHolder;
 import dev.xkmc.danmakuapi.content.custom.screen.ClientCustomSpellHandler;
+import dev.xkmc.danmakuapi.content.spell.item.SpellContainer;
 import dev.xkmc.danmakuapi.init.data.DanmakuLang;
+import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.l2library.content.raytrace.IGlowingTarget;
 import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
-import dev.xkmc.l2serial.serialization.codec.TagCodec;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -22,23 +24,17 @@ import java.util.List;
 
 public class CustomSpellItem extends Item implements IGlowingTarget {
 
-	private ISpellFormData<?> getData(ItemStack stack) {
-		var tag = stack.getTag();
-		if (tag != null && tag.contains("SpellData")) {
-			var obj = TagCodec.valueFromTag(tag.getCompound("SpellData"), Record.class);
-			if (obj instanceof ISpellFormData<?> dat)
-				return dat;
-		}
-		return def;
-	}
-
-	private final ISpellFormData<?> def;
+	private final SpellDataHolder def;
 	private final boolean requireTarget;
 
 	public CustomSpellItem(Properties properties, boolean requireTarget, ISpellFormData<?> def) {
 		super(properties);
 		this.requireTarget = requireTarget;
-		this.def = def;
+		this.def = new SpellDataHolder(def.cast());
+	}
+
+	private ISpellFormData<?> getData(ItemStack stack) {
+		return DanmakuItems.SPELL_DATA.getOrDefault(stack, def).cast();
 	}
 
 	@Override
@@ -48,7 +44,7 @@ public class CustomSpellItem extends Item implements IGlowingTarget {
 		ISpellFormData<?> data = getData(stack);
 		if (player.isShiftKeyDown()) {
 			if (level.isClientSide()) {
-				ClientCustomSpellHandler.open(data);
+				ClientCustomSpellHandler.open(stack.getHoverName(), data);
 			}
 		} else {
 			LivingEntity target = RayTraceUtil.serverGetTarget(player);
@@ -73,7 +69,7 @@ public class CustomSpellItem extends Item implements IGlowingTarget {
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> list, TooltipFlag flag) {
 		ISpellFormData<?> data = getData(stack);
-		list.add(DanmakuLang.SPELL_COST.get(data.cost(), data.getAmmoCost()));
+		list.add(DanmakuLang.SPELL_COST.get(data.cost(), data.getAmmoCost().getDefaultInstance().getHoverName()));
 		if (requireTarget) {
 			list.add(DanmakuLang.SPELL_TARGET.get());
 		}

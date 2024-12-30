@@ -1,9 +1,9 @@
 package dev.xkmc.danmakuapi.content.item;
 
-import dev.xkmc.danmakuapi.init.data.DanmakuLang;
-import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.danmakuapi.content.spell.item.ItemSpell;
 import dev.xkmc.danmakuapi.content.spell.item.SpellContainer;
+import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
+import dev.xkmc.danmakuapi.init.data.DanmakuLang;
 import dev.xkmc.l2library.content.raytrace.IGlowingTarget;
 import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
 import net.minecraft.network.chat.Component;
@@ -60,7 +60,7 @@ public class SpellItem extends ProjectileWeaponItem implements IGlowingTarget {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		list.add(DanmakuLang.SPELL_COST.get(pred.get().getName(pred.get().getDefaultInstance())));
+		list.add(DanmakuLang.SPELL_COST.get(1, pred.get().getDefaultInstance().getHoverName()));
 		if (requireTarget) {
 			list.add(DanmakuLang.SPELL_TARGET.get());
 		}

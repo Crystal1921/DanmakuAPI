@@ -3,11 +3,17 @@ package dev.xkmc.danmakuapi.init.registrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.xkmc.danmakuapi.api.DanmakuBullet;
 import dev.xkmc.danmakuapi.api.DanmakuLaser;
+import dev.xkmc.danmakuapi.content.custom.data.HomingSpellFormData;
+import dev.xkmc.danmakuapi.content.custom.data.RingSpellFormData;
+import dev.xkmc.danmakuapi.content.custom.data.SpellDataHolder;
 import dev.xkmc.danmakuapi.content.item.DanmakuItem;
 import dev.xkmc.danmakuapi.content.item.LaserItem;
 import dev.xkmc.danmakuapi.content.render.DisplayType;
+import dev.xkmc.danmakuapi.content.item.CustomSpellItem;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.data.DanmakuTagGen;
+import dev.xkmc.l2core.init.reg.simple.DCReg;
+import dev.xkmc.l2core.init.reg.simple.DCVal;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -93,7 +99,26 @@ public class DanmakuItems {
 	private static final ItemEntry<DanmakuItem>[][] DANMAKU;
 	private static final ItemEntry<LaserItem>[][] LASER;
 
+	public static final ItemEntry<CustomSpellItem> CUSTOM_SPELL_RING, CUSTOM_SPELL_HOMING;
+
+	private static final DCReg DC = DCReg.of(DanmakuAPI.REG);
+	public static final DCVal<SpellDataHolder> SPELL_DATA = DC.reg("spell_data", SpellDataHolder.class, true);
+
 	static {
+
+
+		CUSTOM_SPELL_RING = DanmakuAPI.REGISTRATE
+				.item("custom_spell_ring", p -> new CustomSpellItem(p.stacksTo(1), false, RingSpellFormData.FLOWER))
+				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/custom_spell")))
+				.tag(DanmakuTagGen.CUSTOM_SPELL)
+				.register();
+
+		CUSTOM_SPELL_HOMING = DanmakuAPI.REGISTRATE
+				.item("custom_spell_homing", p -> new CustomSpellItem(p.stacksTo(1), true, HomingSpellFormData.RING))
+				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/custom_spell")))
+				.tag(DanmakuTagGen.CUSTOM_SPELL)
+				.register();
+
 		DANMAKU = new ItemEntry[Bullet.values().length][DyeColor.values().length];
 		for (var t : Bullet.values()) {
 			for (var e : DyeColor.values()) {

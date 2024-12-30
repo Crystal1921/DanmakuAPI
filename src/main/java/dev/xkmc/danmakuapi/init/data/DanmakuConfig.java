@@ -44,7 +44,7 @@ public class DanmakuConfig {
 					.defineInRange("playerLaserDuration", 100, 5, 1000);
 
 			customSpellMaxDuration = builder.text("Max duration of custom spell allowed")
-					.defineInRange("customSpellMaxDuration", 1, 60, 1000);
+					.defineInRange("customSpellMaxDuration", 60, 1, 1000);
 			ringSpellDanmakuPerItemCost = builder.text("Ring Spell: Max number of bullet allowed per item cost")
 					.defineInRange("ringSpellDanmakuPerItemCost", 32, 1, 1024);
 			homingSpellDanmakuPerItemCost = builder.text("Homing Spell: Max number of bullet allowed per item cost")

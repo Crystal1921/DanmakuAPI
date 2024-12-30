@@ -1,0 +1,85 @@
+{
+	"danmaku_api.title": "Danmaku API",
+	"itemGroup.danmaku_api": {
+		"danmaku": "妖怪们的弹幕"
+	},
+	"entity.danmaku_api": {
+		"item_danmaku": "弹幕",
+		"item_laser": "激光"
+	},
+	"danmaku_api": {
+		"tooltip": {
+			"spell_cost": "消耗%s个%s",
+			"spell_target": "需要瞄准目标发动",
+			"danmaku_bypass": "穿透实体",
+			"danmaku_damage": "%s伤害"
+		},
+		"custom_spell": {
+			"bullet": {
+				"title": "弹幕形状",
+				"circle": "环玉",
+				"ball": "小玉",
+				"mentos": "中玉",
+				"bubble": "大玉",
+				"butterfly": "蝶弹",
+				"spark": "小星弹",
+				"star": "大星弹"
+			},
+			"color": {
+				"title": "弹幕颜色",
+				"black": "黑色",
+				"blue": "蓝色",
+				"brown": "棕色",
+				"cyan": "青色",
+				"gray": "灰色",
+				"green": "绿色",
+				"light_blue": "淡蓝色",
+				"light_gray": "淡灰色",
+				"lime": "黄绿色",
+				"magenta": "品红色",
+				"orange": "橙色",
+				"pink": "粉红色",
+				"purple": "紫色",
+				"red": "红色",
+				"white": "白色",
+				"yellow": "黄色"
+			},
+			"branches": "瓣数",
+			"branches.desc": "发射的弹幕形成多少瓣",
+			"steps": "步数",
+			"steps.desc": "一瓣的弹幕数量",
+			"delay": "步延迟",
+			"delay.desc": "每步之间的时间间隔。单位：游戏刻",
+			"range": "弹幕行程",
+			"range.desc": "弹幕能飞多远",
+			"randomizedRange": "行程随机量",
+			"randomizedRange.desc": "弹幕行程的随机变化范围，正负百分比",
+			"branchAngle": "瓣横角",
+			"branchAngle.desc": "相邻弹幕瓣之间的横向夹角。单位：度",
+			"stepAngle": "步横角",
+			"stepAngle.desc": "相邻弹幕步之间的横向夹角。单位：度",
+			"stepVerticalAngle": "步竖角",
+			"stepVerticalAngle.desc": "相邻弹幕步之间的纵向夹角。单位：度",
+			"randomizedAngle": "角度随机量",
+			"randomizedAngle.desc": "弹幕角度的横向和纵向角度随机量。单位：度",
+			"speed": "弹幕速度",
+			"speed.desc": "弹幕的速度",
+			"speedFirst": "第一步速度",
+			"speedFirst.desc": "每瓣中第一步弹幕的速度",
+			"speedLast": "最后步速度",
+			"speedLast.desc": "每瓣中最后一步弹幕的速度",
+			"randomizedSpeed": "速度随机量",
+			"randomizedSpeed.desc": "弹幕速度的随机变化范围，正负百分比",
+			"turnTime": "转向延迟",
+			"turnTime.desc": "弹幕发射到重新定向至目标的时间间隔，单位：游戏刻",
+			"reset": "还原",
+			"invalid_time": "符卡最高持续时间为%s刻。当前持续时间：%s刻"
+		}
+	},
+	"death.attack": {
+		"danmaku": "%s在弹幕战中满身疮痍",
+		"danmaku.player": "%s在与%s的弹幕战中满身疮痍",
+		"abyssal_danmaku": "%s在弹幕战中满身疮痍",
+		"abyssal_danmaku.player": "%s在与%s的弹幕战中满身疮痍"
+	}
+}

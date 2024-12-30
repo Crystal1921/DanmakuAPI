@@ -1,0 +1,41 @@
+{
+	"item.danmaku_api": {
+		"custom_spell_ring": "自定义符卡 - 开花弹",
+		"custom_spell_homing": "自定义符卡 - 追踪弹"
+	},
+	"-cartesian": {
+		"danmaku": {
+			"path": "item.danmaku_api",
+			"list": [
+				{
+					"black": "黑色",
+					"blue": "蓝色",
+					"brown": "棕色",
+					"cyan": "青色",
+					"gray": "灰色",
+					"green": "绿色",
+					"light_blue": "淡蓝色",
+					"light_gray": "淡灰色",
+					"lime": "黄绿色",
+					"magenta": "品红色",
+					"orange": "橙色",
+					"pink": "粉红色",
+					"purple": "紫色",
+					"red": "红色",
+					"white": "白色",
+					"yellow": "黄色"
+				},
+				{
+					"circle_danmaku": "环玉弹幕",
+					"ball_danmaku": "小玉弹幕",
+					"mentos_danmaku": "中玉弹幕",
+					"bubble_danmaku": "大玉弹幕",
+					"butterfly_danmaku": "蝴蝶弹幕",
+					"spark_danmaku": "小星弹幕",
+					"star_danmaku": "大星弹幕",
+					"laser": "激光"
+				}
+			]
+		}
+	}
+}
