@@ -56,10 +56,6 @@ public enum DanmakuLang {
 		for (DanmakuLang lang : DanmakuLang.values()) {
 			pvd.add(lang.key, lang.def);
 		}
-		pvd.add("death.attack.danmaku", "%s lost the danmaku battle");
-		pvd.add("death.attack.danmaku.player", "%s lost the danmaku battle to %s");
-		pvd.add("death.attack.abyssal_danmaku", "%s lost the danmaku battle");
-		pvd.add("death.attack.abyssal_danmaku.player", "%s lost the danmaku battle to %s");
 
 		pvd.add(DanmakuAPI.MODID + ".custom_spell.bullet.title", "Bullet Type");
 		pvd.add(DanmakuAPI.MODID + ".custom_spell.color.title", "Bullet Color");

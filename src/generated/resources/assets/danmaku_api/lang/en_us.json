@@ -1,6 +1,6 @@
 {
   "danmaku_api.configuration.customSpellMaxDuration": "Max duration of custom spell allowed",
-  "danmaku_api.configuration.customSpellMaxDuration.tooltip": "Range: 60 ~ 1000",
+  "danmaku_api.configuration.customSpellMaxDuration.tooltip": "Range: 1 ~ 1000",
   "danmaku_api.configuration.homingSpellDanmakuPerItemCost": "Homing Spell: Max number of bullet allowed per item cost",
   "danmaku_api.configuration.homingSpellDanmakuPerItemCost.tooltip": "Range: 1 ~ 1024",
   "danmaku_api.configuration.laserRenderAdditive": "Additive laser layer",
@@ -85,8 +85,10 @@
   "danmaku_api.tooltip.spell_cost": "Costs %s %s",
   "danmaku_api.tooltip.spell_target": "Requires targeting an entity to activate",
   "death.attack.abyssal_danmaku": "%s lost the danmaku battle",
+  "death.attack.abyssal_danmaku.item": "%s lost the danmaku battle to %s",
   "death.attack.abyssal_danmaku.player": "%s lost the danmaku battle to %s",
   "death.attack.danmaku": "%s lost the danmaku battle",
+  "death.attack.danmaku.item": "%s lost the danmaku battle to %s",
   "death.attack.danmaku.player": "%s lost the danmaku battle to %s",
   "entity.danmaku_api.item_danmaku": "Item Danmaku",
   "entity.danmaku_api.item_laser": "Item Laser",

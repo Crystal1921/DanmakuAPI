@@ -1,6 +1,6 @@
-// 1.21.1	2024-12-30T09:43:23.725592	Registrate Provider for danmaku_api [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider, Tags (mob_effect), Tags (attribute), Tags (enchantment), Tags (damage_type)]
-e5c4c676ac25898b30c32d2362697436fa8c15be assets/danmaku_api/lang/en_ud.json
-8269215fede4001abb2d939725ff98f654563389 assets/danmaku_api/lang/en_us.json
+// 1.21.1	2024-12-30T16:13:11.721327	Registrate Provider for danmaku_api [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider, Tags (mob_effect), Tags (attribute), Tags (enchantment), Tags (damage_type)]
+3f39d92a9363eb59904374af3073656d88eb68c0 assets/danmaku_api/lang/en_ud.json
+ebe2a9fb27498bb1b4abdc6b75d7efd7b2b3adb4 assets/danmaku_api/lang/en_us.json
 2ac1bab6f2275ec152d0000fbef6a68027674807 assets/danmaku_api/models/item/black_ball_danmaku.json
 b06781e7a6a40445c43483bcb60cce2f8e046f5b assets/danmaku_api/models/item/black_bubble_danmaku.json
 9ec789a392d786f4b50631c9194a5c69c57fef42 assets/danmaku_api/models/item/black_butterfly_danmaku.json

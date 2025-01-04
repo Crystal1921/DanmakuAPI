@@ -15,8 +15,10 @@ import net.neoforged.neoforge.common.Tags;
 
 public class DanmakuDamageTypes extends DamageTypeAndTagsGen {
 
-	public static final ResourceKey<DamageType> DANMAKU = createDamage("danmaku");
-	public static final ResourceKey<DamageType> ABYSSAL = createDamage("abyssal_danmaku");
+	public static final ResourceKey<DamageType> DANMAKU = create("danmaku",
+			"%s lost the danmaku battle", "%s lost the danmaku battle to %s");
+	public static final ResourceKey<DamageType> ABYSSAL = create("abyssal_danmaku",
+			"%s lost the danmaku battle", "%s lost the danmaku battle to %s");
 
 	public static final TagKey<DamageType> DANMAKU_TYPE = TagKey.create(Registries.DAMAGE_TYPE, DanmakuAPI.loc("danmaku"));
 
@@ -31,10 +33,6 @@ public class DanmakuDamageTypes extends DamageTypeAndTagsGen {
 				.add(DANMAKU_GROUP).add(L2DamageTypes.BYPASS_MAGIC);
 	}
 
-	private static ResourceKey<DamageType> createDamage(String id) {
-		return ResourceKey.create(Registries.DAMAGE_TYPE, DanmakuAPI.loc(id));
-	}
-
 	public static DamageSource danmaku(IDanmakuEntity self) {
 		return new DamageSource(self.self().level().registryAccess()
 				.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DANMAKU), self.self(),
@@ -45,6 +43,25 @@ public class DanmakuDamageTypes extends DamageTypeAndTagsGen {
 		return new DamageSource(self.self().level().registryAccess()
 				.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ABYSSAL), self.self(),
 				self.self().getOwner());
+	}
+
+	private static ResourceKey<DamageType> create(String id, String msg) {
+		return create(id, msg, msg);
+	}
+
+	private static ResourceKey<DamageType> create(String id, String msg, String player) {
+		return create(id, msg, player, player);
+	}
+
+	private static ResourceKey<DamageType> create(String id, String msg, String player, String item) {
+		DanmakuAPI.REGISTRATE.addRawLang("death.attack." + id, msg);
+		DanmakuAPI.REGISTRATE.addRawLang("death.attack." + id + ".player", player);
+		DanmakuAPI.REGISTRATE.addRawLang("death.attack." + id + ".item", item);
+		return create(id);
+	}
+
+	private static ResourceKey<DamageType> create(String id) {
+		return ResourceKey.create(Registries.DAMAGE_TYPE, DanmakuAPI.loc(id));
 	}
 
 
