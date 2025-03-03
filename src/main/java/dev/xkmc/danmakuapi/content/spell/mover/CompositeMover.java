@@ -25,6 +25,13 @@ public class CompositeMover extends DanmakuMover {
 		return this;
 	}
 
+	public void addEnd() {
+		var mover = list.get(list.size() - 1);
+		if (mover.mover instanceof RectMover rect) {
+			add(20, rect.toStatic(total - mover.subtract()));
+		}
+	}
+
 	@Override
 	public ProjectileMovement move(MoverInfo info) {
 		if (index < list.size() - 1) {
