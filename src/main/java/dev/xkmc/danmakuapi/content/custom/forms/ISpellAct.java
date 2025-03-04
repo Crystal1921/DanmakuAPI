@@ -1,20 +1,19 @@
-package dev.xkmc.danmakuapi.content.spell.spellcard;
+package dev.xkmc.danmakuapi.content.custom.forms;
 
+import dev.xkmc.danmakuapi.content.spell.spellcard.ActualSpellCard;
+import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
+import dev.xkmc.danmakuapi.content.spell.spellcard.Ticker;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import dev.xkmc.l2serial.util.Wrappers;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.LivingEntity;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.ArrayList;
 import java.util.List;
 
 @SerialClass
-public class ActualSpellCard extends SpellCard {
+public abstract class ISpellAct<D, C extends ActualSpellCard> extends Ticker<C> {
 
-	@SerialField
-	public int tick, hit;
 
 	@SerialField
 	private final ArrayList<Ticker<?>> tickers = new ArrayList<>();
@@ -22,27 +21,21 @@ public class ActualSpellCard extends SpellCard {
 	private List<Ticker<?>> temp;
 
 	@OverridingMethodsMustInvokeSuper
-	public void tick(CardHolder holder) {
+	public void init(D data) {
+		tickers.clear();
+	}
+
+	@OverridingMethodsMustInvokeSuper
+	public boolean tick(CardHolder holder, C card) {
 		tick++;
 		temp = new ArrayList<>();
 		tickers.removeIf(t -> t.tick(holder, Wrappers.cast(this)));
 		tickers.addAll(temp);
 		temp = null;
+		return tickers.isEmpty();
 	}
 
-	public void reset() {
-		tick = 0;
-		hit = 0;
-		tickers.clear();
-	}
-
-	public void hurt(CardHolder holder, DamageSource source, float amount) {
-		if (source.getEntity() instanceof LivingEntity && amount > 1) {
-			hit++;
-		}
-	}
-
-	public <T extends ActualSpellCard> void addTicker(Ticker<T> tick) {
+	public <T extends ISpellAct<?, ?>> void addTicker(Ticker<T> tick) {
 		if (temp != null) temp.add(tick);
 		else tickers.add(tick);
 	}
