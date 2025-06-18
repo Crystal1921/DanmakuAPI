@@ -29,8 +29,8 @@ public class ItemSpell {
 	private LivingEntity targetCache;
 	protected CardHolder holder;
 
-	public void start(Player player, @Nullable LivingEntity target) {
-		this.dir = RayTraceUtil.getRayTerm(Vec3.ZERO, player.getXRot(), player.getYRot(), 1);
+	public void start(LivingEntity livingEntity, @Nullable LivingEntity target) {
+		this.dir = RayTraceUtil.getRayTerm(Vec3.ZERO, livingEntity.getXRot(), livingEntity.getYRot(), 1);
 		if (target != null) {
 			targetId = target.getUUID();
 			targetPos = target.position().add(0, target.getBbHeight() / 2, 0);

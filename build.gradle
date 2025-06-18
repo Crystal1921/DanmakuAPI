@@ -138,7 +138,7 @@ repositories {
         name = "OctoStudios"
         url = uri("https://maven.octo-studios.com/releases")
     }
-    mavenLocal();
+    mavenLocal()
 }
 
 dependencies {
@@ -153,10 +153,8 @@ dependencies {
     implementation "dev.xkmc:l2menustacker:${l2menustacker_ver}"
     implementation "dev.xkmc:l2tabs:${l2tabs_ver}"
 
-
-    implementation "com.tlm:touhoulittlemaid:1.21-release-1.1.12-snapshot4"
-
     runtimeOnly "dev.xkmc:l2itemselector:${l2itemselector_ver}"
     runtimeOnly "dev.xkmc:l2modularblocks:${l2modularblocks_ver}"
 
+    implementation "com.tlm:touhoulittlemaid:1.21.1-release-1.1.14-hotfix"
 }
