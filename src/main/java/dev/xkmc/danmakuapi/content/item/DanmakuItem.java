@@ -2,18 +2,23 @@ package dev.xkmc.danmakuapi.content.item;
 
 import dev.xkmc.danmakuapi.api.DanmakuBullet;
 import dev.xkmc.danmakuapi.api.DanmakuUseEvent;
+import dev.xkmc.danmakuapi.api.GrazeHelper;
 import dev.xkmc.danmakuapi.content.entity.ItemBulletEntity;
 import dev.xkmc.danmakuapi.content.render.ButterflyProjectileType;
 import dev.xkmc.danmakuapi.content.render.RotatingProjectileType;
 import dev.xkmc.danmakuapi.content.render.SimpleProjectileType;
+import dev.xkmc.danmakuapi.content.spell.item.SpellContainer;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.danmakuapi.init.data.DanmakuLang;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
+import dev.xkmc.fastprojectileapi.render.ProjTypeHolder;
 import dev.xkmc.fastprojectileapi.render.RenderableProjectileType;
 import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
+import dev.xkmc.l2serial.util.Wrappers;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -30,6 +35,8 @@ import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.List;
 
+import static dev.xkmc.danmakuapi.init.registrate.DanmakuItems.Bullet.*;
+
 public class DanmakuItem extends Item {
 
 	public final DanmakuBullet type;
@@ -45,6 +52,8 @@ public class DanmakuItem extends Item {
 
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
+		if (GrazeHelper.forbidDanmaku(player))
+			return InteractionResultHolder.fail(stack);
 		int cooldown = DanmakuConfig.SERVER.playerDanmakuCooldown.get();
 		var event = new DanmakuUseEvent(player, stack, cooldown);
 		NeoForge.EVENT_BUS.post(event);
@@ -60,6 +69,9 @@ public class DanmakuItem extends Item {
 					RayTraceUtil.getRayTerm(Vec3.ZERO, player.getXRot(), player.getYRot(), 2));
 			danmaku.moveTo(RayTraceUtil.getRayTerm(player.getEyePosition(), player.getXRot(), player.getYRot(), 2));
 			level.addFreshEntity(danmaku);
+			if (player instanceof ServerPlayer sp)
+				SpellContainer.track(sp, danmaku);
+
 		}
 		player.awardStat(Stats.ITEM_USED.get(this));
 		player.getCooldowns().addCooldown(this, event.getCooldown());
@@ -76,19 +88,19 @@ public class DanmakuItem extends Item {
 			list.add(DanmakuLang.DANMAKU_BYPASS.get());
 	}
 
-	private RenderableProjectileType<?, ?> render;
+	private ProjTypeHolder<? extends RenderableProjectileType<?, ?>, ?> render;
 
-	public RenderableProjectileType<?, ?> getTypeForRender() {
+	public ProjTypeHolder<? extends RenderableProjectileType<?, ?>, ?> getTypeForRender() {
 		if (render == null) {
-			var loc = DanmakuAPI.loc("textures/entity/bullet/" + type.getName() + "/" + color.getName() + ".png");
-			render = switch (type) {
-				case DanmakuItems.Bullet.BUTTERFLY -> new ButterflyProjectileType(loc, type.display(), 20);
-				case DanmakuItems.Bullet.SPARK -> new RotatingProjectileType(loc, type.display(), 20);
-				case DanmakuItems.Bullet.STAR -> new RotatingProjectileType(loc, type.display(), 40);
-				default -> new SimpleProjectileType(loc, type.display());
+			var loc = DanmakuAPI.loc("textures/entities/bullet/" + type.getName() + "/" + color.getName() + ".png");
+			var r = switch (type) {
+				case BUTTERFLY -> new ButterflyProjectileType(loc, type.display(), 20);
+				case SPARK -> new RotatingProjectileType(loc, type.display(), 20);
+				case STAR -> new RotatingProjectileType(loc, type.display(), 40);
+				default -> new SimpleProjectileType(loc, type.display());//TODO
 			};
+			render = ProjTypeHolder.wrap(Wrappers.cast(r));
 		}
 		return render;
 	}
-
 }

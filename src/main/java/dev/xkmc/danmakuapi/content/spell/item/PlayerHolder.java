@@ -6,8 +6,11 @@ import dev.xkmc.danmakuapi.content.entity.ItemBulletEntity;
 import dev.xkmc.danmakuapi.content.entity.ItemLaserEntity;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
+import dev.xkmc.fastprojectileapi.collision.EntityStorageHelper;
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
@@ -62,17 +65,25 @@ public record PlayerHolder(
 	}
 
 	@Override
-	public ItemLaserEntity prepareLaser(int life, Vec3 pos, Vec3 vec, int len, DanmakuLaser type, DyeColor color) {
+	public ItemLaserEntity prepareLaser(int life, Vec3 pos, Vec3 vec, float len, DanmakuLaser type, DyeColor color) {
 		ItemLaserEntity danmaku = new ItemLaserEntity(DanmakuEntities.ITEM_LASER.get(), player, player.level());
 		danmaku.setItem(type.get(color).asStack());
 		danmaku.setup(type.damage(), life, len, true, vec);
 		danmaku.setPos(pos);
+		danmaku.setupLength = type.setupLength();
 		return danmaku;
 	}
 
 	@Override
 	public void shoot(SimplifiedProjectile danmaku) {
-		player.level().addFreshEntity(danmaku);
+		if (danmaku instanceof ItemBulletEntity e) {
+			if (e.afterExpiry != null) {
+				e.afterExpiry.setup(this);
+			}
+		}
+		if (danmaku instanceof SimplifiedProjectile sp)
+			spell.cache.add(sp);
+		if (self().level() instanceof ServerLevel sl)
+			EntityStorageHelper.fastAdd(sl, danmaku);
 	}
-
 }

@@ -1,0 +1,20 @@
+{
+  "values": [
+    "danmaku_api:white_laser",
+    "danmaku_api:orange_laser",
+    "danmaku_api:magenta_laser",
+    "danmaku_api:light_blue_laser",
+    "danmaku_api:yellow_laser",
+    "danmaku_api:lime_laser",
+    "danmaku_api:pink_laser",
+    "danmaku_api:gray_laser",
+    "danmaku_api:light_gray_laser",
+    "danmaku_api:cyan_laser",
+    "danmaku_api:purple_laser",
+    "danmaku_api:blue_laser",
+    "danmaku_api:brown_laser",
+    "danmaku_api:green_laser",
+    "danmaku_api:red_laser",
+    "danmaku_api:black_laser"
+  ]
+}

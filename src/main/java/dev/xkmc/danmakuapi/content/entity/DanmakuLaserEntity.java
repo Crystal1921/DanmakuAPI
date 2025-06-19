@@ -15,6 +15,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TraceableEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
@@ -27,11 +28,13 @@ import java.util.Objects;
 public class DanmakuLaserEntity extends BaseLaser implements IEntityWithComplexSpawn, IDanmakuEntity {
 
 	@SerialField
-	private int life = 0, prepare, start, end;
+	protected int life = 0, prepare, start, end;
 	@SerialField
 	private boolean bypassWall = false;
 	@SerialField
 	public float damage = 0, length = 0;
+	@SerialField
+	public boolean setupLength;
 
 	public double earlyTerminate = -1;
 
@@ -99,6 +102,10 @@ public class DanmakuLaserEntity extends BaseLaser implements IEntityWithComplexS
 	}
 
 	public float percentOpen(float pTick) {
+		return setupLength ? 1 : percentLoad(pTick);
+	}
+
+	public float percentLoad(float pTick) {
 		pTick += tickCount;
 		if (pTick < prepare) return 0.1f;
 		else if (pTick < start)
@@ -109,8 +116,13 @@ public class DanmakuLaserEntity extends BaseLaser implements IEntityWithComplexS
 		else return 0;
 	}
 
-	public float effectiveLength() {
-		return (float) (earlyTerminate >= 0 ? earlyTerminate : length);
+	public float effectiveLength(float pTick) {
+		if (setupLength) {
+			return percentLoad(pTick) * length;
+		}
+		if (earlyTerminate >= 0)
+			return (float) earlyTerminate;
+		return length;
 	}
 
 	@Override
@@ -171,6 +183,16 @@ public class DanmakuLaserEntity extends BaseLaser implements IEntityWithComplexS
 	public void readSpawnData(RegistryFriendlyByteBuf additionalData) {
 		super.readSpawnData(additionalData);
 		PacketCodec.from(additionalData, getClass(), Wrappers.cast(this));
+	}
+
+	@Override
+	public boolean isValid() {
+		return tickCount < life;
+	}
+
+	@Override
+	public TraceableEntity asTraceable() {
+		return this;
 	}
 
 }

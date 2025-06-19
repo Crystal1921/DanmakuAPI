@@ -2,15 +2,17 @@ package dev.xkmc.danmakuapi.content.render;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
+import dev.xkmc.fastprojectileapi.render.ProjectileRenderer;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.BiFunction;
 
 public abstract class DanmakuRenderStates extends RenderType {
+
 
 	public DanmakuRenderStates(String pName, VertexFormat pFormat, VertexFormat.Mode pMode, int pBufferSize, boolean pAffectsCrumbling, boolean pSortOnUpload, Runnable pSetupState, Runnable pClearState) {
 		super(pName, pFormat, pMode, pBufferSize, pAffectsCrumbling, pSortOnUpload, pSetupState, pClearState);
@@ -41,11 +43,22 @@ public abstract class DanmakuRenderStates extends RenderType {
 			Util.memoize((rl, type) -> create("laser_" + type.getName(), rl, true, type));
 
 	public static RenderType danmaku(ResourceLocation rl, DisplayType type) {
+		if (type == DisplayType.SOLID) type = DisplayType.TRANSPARENT;
 		return DANMAKU.apply(rl, type);
 	}
 
 	public static RenderType laser(ResourceLocation rl, DisplayType type) {
 		return LASER.apply(rl, type);
+	}
+
+	public static int fading(DisplayType display, int col, ProjectileRenderer<?> r, SimplifiedProjectile e) {
+		double perc = r.fading(e);
+		if (perc == 0) return col;
+		int alpha = (int) ((col >>> 24) * perc);
+		if (display == DisplayType.ADDITIVE) {
+			return 0xff000000 | alpha << 16 | alpha << 8 | alpha;
+		}
+		return (alpha << 24) | col & 0xffffff;
 	}
 
 }

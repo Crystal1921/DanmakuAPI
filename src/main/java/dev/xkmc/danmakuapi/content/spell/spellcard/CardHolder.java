@@ -27,7 +27,7 @@ public interface CardHolder {
 
 	ItemBulletEntity prepareDanmaku(int life, Vec3 vec, DanmakuBullet type, DyeColor color);
 
-	ItemLaserEntity prepareLaser(int life, Vec3 pos, Vec3 vec, int len, DanmakuLaser type, DyeColor color);
+	ItemLaserEntity prepareLaser(int life, Vec3 pos, Vec3 vec, float len, DanmakuLaser type, DyeColor color);
 
 	void shoot(SimplifiedProjectile danmaku);
 

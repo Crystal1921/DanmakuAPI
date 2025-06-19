@@ -3,6 +3,7 @@ package dev.xkmc.danmakuapi.content.spell.mover;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.fastprojectileapi.entity.ProjectileMovement;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 @SerialClass
@@ -13,6 +14,8 @@ public class AttachedMover extends TargetPosMover {
 		var e = info.self();
 		if (e.self().getOwner() instanceof CardHolder holder) {
 			return holder.center();
+		} else if (e.asTraceable().getOwner() instanceof Player player) {
+			return player.position().add(0, player.getBbHeight() / 2, 0);
 		}
 		return info.prevPos();
 	}

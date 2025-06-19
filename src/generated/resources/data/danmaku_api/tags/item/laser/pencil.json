@@ -1,0 +1,20 @@
+{
+  "values": [
+    "danmaku_api:white_pencil",
+    "danmaku_api:orange_pencil",
+    "danmaku_api:magenta_pencil",
+    "danmaku_api:light_blue_pencil",
+    "danmaku_api:yellow_pencil",
+    "danmaku_api:lime_pencil",
+    "danmaku_api:pink_pencil",
+    "danmaku_api:gray_pencil",
+    "danmaku_api:light_gray_pencil",
+    "danmaku_api:cyan_pencil",
+    "danmaku_api:purple_pencil",
+    "danmaku_api:blue_pencil",
+    "danmaku_api:brown_pencil",
+    "danmaku_api:green_pencil",
+    "danmaku_api:red_pencil",
+    "danmaku_api:black_pencil"
+  ]
+}
