@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "danmaku_api:brown_ball_danmaku"
+    },
+    {
+      "item": "danmaku_api:brown_laser"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "danmaku_api:brown_pencil"
+  }
+}

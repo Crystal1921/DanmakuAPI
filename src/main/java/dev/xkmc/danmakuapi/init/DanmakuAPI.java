@@ -3,11 +3,13 @@ package dev.xkmc.danmakuapi.init;
 import com.mojang.logging.LogUtils;
 import com.tterrag.registrate.providers.ProviderType;
 import dev.xkmc.danmakuapi.content.custom.screen.SpellSetToServer;
-import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
-import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
-import dev.xkmc.danmakuapi.init.data.DanmakuLang;
+import dev.xkmc.danmakuapi.content.virtual.ClientDanmakuCache;
+import dev.xkmc.danmakuapi.content.virtual.DanmakuToClientPacket;
+import dev.xkmc.danmakuapi.content.virtual.EraseDanmakuToClient;
+import dev.xkmc.danmakuapi.init.data.*;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
+import dev.xkmc.fastprojectileapi.render.ProjectileRenderHelper;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import dev.xkmc.l2core.init.reg.simple.Reg;
@@ -31,7 +33,9 @@ public class DanmakuAPI {
 	public static final Reg REG = new Reg(MODID);
 	public static final L2Registrate REGISTRATE = new L2Registrate(MODID);
 	public static final PacketHandler HANDLER = new PacketHandler(MODID, 1,
-			e -> e.create(SpellSetToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER)
+			e -> e.create(SpellSetToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
+			e -> e.create(DanmakuToClientPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
+			e -> e.create(EraseDanmakuToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
 	);
 
 	public static final SimpleEntry<CreativeModeTab> TAB =
@@ -42,11 +46,14 @@ public class DanmakuAPI {
 		DanmakuItems.register();
 		DanmakuEntities.register();
 		DanmakuConfig.init();
+		ProjectileRenderHelper.LIST.add(ClientDanmakuCache::get);
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void gatherData(GatherDataEvent event) {
 		REGISTRATE.addDataGenerator(ProviderType.LANG, DanmakuLang::genLang);
+		REGISTRATE.addDataGenerator(ProviderType.RECIPE, DanmakuRecipeGen::genRecipes);
+		REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, DanmakuTagGen::genItemTag);
 		new DanmakuDamageTypes(REGISTRATE).generate();
 	}
 

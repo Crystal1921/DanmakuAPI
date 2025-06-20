@@ -21,11 +21,14 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class SpellItem extends ProjectileWeaponItem implements IGlowingTarget {
+
+	public static final List<SpellItem> LIST = new ArrayList<>();
 
 	private final Supplier<ItemSpell> spell;
 	private final boolean requireTarget;
@@ -36,6 +39,10 @@ public class SpellItem extends ProjectileWeaponItem implements IGlowingTarget {
 		this.spell = spell;
 		this.requireTarget = requireTarget;
 		this.pred = pred;
+		synchronized (LIST) {
+			LIST.add(this);
+		}
+
 	}
 
 	@Override

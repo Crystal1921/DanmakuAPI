@@ -1,19 +1,19 @@
 package dev.xkmc.danmakuapi.content.entity;
 
+import dev.xkmc.danmakuapi.api.GrazeHelper;
 import dev.xkmc.danmakuapi.content.item.LaserItem;
-import dev.xkmc.danmakuapi.content.spell.mover.DanmakuMover;
-import dev.xkmc.danmakuapi.content.spell.mover.MoverInfo;
+import dev.xkmc.danmakuapi.content.particle.DanmakuParticleHelper;
+import dev.xkmc.danmakuapi.content.spell.mover.*;
 import dev.xkmc.fastprojectileapi.entity.ProjectileMovement;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -22,10 +22,10 @@ import net.minecraft.world.phys.Vec3;
 @SerialClass
 public class ItemLaserEntity extends DanmakuLaserEntity implements ItemSupplier {
 
-	private static final EntityDataAccessor<ItemStack> DATA_ITEM_STACK = SynchedEntityData.defineId(ItemLaserEntity.class, EntityDataSerializers.ITEM_STACK);
-
 	@SerialField
 	public DanmakuMover mover;
+	@SerialField
+	public ItemStack stack = ItemStack.EMPTY;
 
 	public ItemLaserEntity(EntityType<? extends ItemLaserEntity> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
@@ -37,6 +37,16 @@ public class ItemLaserEntity extends DanmakuLaserEntity implements ItemSupplier 
 
 	public ItemLaserEntity(EntityType<? extends ItemLaserEntity> pEntityType, LivingEntity pShooter, Level pLevel) {
 		super(pEntityType, pShooter, pLevel);
+	}
+
+	public void setDelayedMover(float v0, float v1, int prepare, int setup) {
+		var dir = getForward();
+		var pos = position();
+		var m = new CompositeMover();
+		m.add(prepare, new ZeroMover(dir, dir, prepare));
+		m.add(setup, new RectMover(pos, dir.scale(v0), Vec3.ZERO));
+		m.add(life, new RectMover(pos.add(dir.scale(v0 * setup)), dir.scale(v1), Vec3.ZERO));
+		this.mover = m;
 	}
 
 	@Override
@@ -58,35 +68,21 @@ public class ItemLaserEntity extends DanmakuLaserEntity implements ItemSupplier 
 	}
 
 	public void setItem(ItemStack pStack) {
-		this.getEntityData().set(DATA_ITEM_STACK, pStack.copyWithCount(1));
+		stack = pStack.copyWithCount(1);
 		refreshDimensions();
 	}
 
-	@Override
-	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-		super.onSyncedDataUpdated(key);
-		if (DATA_ITEM_STACK == key) {
-			refreshDimensions();
-		}
-	}
-
-	protected ItemStack getItemRaw() {
-		return this.getEntityData().get(DATA_ITEM_STACK);
-	}
-
 	public ItemStack getItem() {
-		return this.getItemRaw();
+		return stack;
 	}
 
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
-		builder.define(DATA_ITEM_STACK, ItemStack.EMPTY);
 	}
 
 	public void addAdditionalSaveData(CompoundTag nbt) {
 		super.addAdditionalSaveData(nbt);
-		ItemStack itemstack = this.getItemRaw();
-		if (!itemstack.isEmpty()) {
-			nbt.put("Item", itemstack.save(level().registryAccess()));
+		if (!stack.isEmpty()) {
+			nbt.put("Item", stack.save(level().registryAccess()));
 		}
 
 	}
@@ -115,6 +111,37 @@ public class ItemLaserEntity extends DanmakuLaserEntity implements ItemSupplier 
 			}
 		}
 		return sizeCache == null ? 1 : sizeCache;
+	}
+
+	private boolean isErased = false;
+
+	public void markErased(boolean kill) {
+		if (!isErased)
+			super.markErased(kill);
+		isErased = true;
+	}
+
+	@Override
+	public boolean isValid() {
+		return !isErased && super.isValid();
+	}
+
+	private int lastGraze = 0;
+
+	@Override
+	public void doGraze(Player entity) {
+		if (tickCount < lastGraze) return;
+		lastGraze = tickCount + 5;
+		GrazeHelper.graze(entity, this);
+	}
+
+	@Override
+	public void poof() {
+		if (!level().isClientSide()) return;
+		if (!(getItem().getItem() instanceof LaserItem item)) return;
+		int col = item.color.getTextColor();
+		var pos = position().add(0, getBbHeight() / 2, 0);
+		DanmakuParticleHelper.line(level(), pos, getForward(), col, length, getBbWidth() / 2, random);
 	}
 
 }

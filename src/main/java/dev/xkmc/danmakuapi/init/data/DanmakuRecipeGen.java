@@ -8,6 +8,7 @@ import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -39,6 +40,11 @@ public class DanmakuRecipeGen {
 							.define('B', dye)
 							.save(pvd);
 				}
+				unlock(pvd, ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, DanmakuItems.Laser.PENCIL.get(e), 4)::unlockedBy,
+						DanmakuItems.Laser.LASER.get(e).get())
+						.requires(DanmakuItems.Bullet.BALL.get(e))
+						.requires(DanmakuItems.Laser.LASER.get(e))
+						.save(pvd, DanmakuItems.Laser.PENCIL.get(e).getId().withSuffix("_upgrade"));
 			}
 		}
 

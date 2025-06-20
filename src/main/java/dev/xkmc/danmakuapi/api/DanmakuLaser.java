@@ -11,4 +11,12 @@ public interface DanmakuLaser {
 
 	ItemProviderEntry<Item, ? extends LaserItem> get(DyeColor color);
 
+	default boolean setupLength() {
+		return false;
+	}
+
+	default float visualLength() {
+		return 1;
+	}
+
 }

@@ -1,20 +1,20 @@
 package dev.xkmc.danmakuapi.content.entity;
 
 import dev.xkmc.danmakuapi.api.DanmakuCommander;
+import dev.xkmc.danmakuapi.api.GrazeHelper;
 import dev.xkmc.danmakuapi.content.item.DanmakuItem;
+import dev.xkmc.danmakuapi.content.particle.DanmakuParticleHelper;
 import dev.xkmc.danmakuapi.content.spell.mover.DanmakuMover;
 import dev.xkmc.danmakuapi.content.spell.mover.MoverInfo;
+import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
+import dev.xkmc.danmakuapi.content.spell.spellcard.TrailAction;
 import dev.xkmc.fastprojectileapi.entity.ProjectileMovement;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -23,12 +23,16 @@ import net.minecraft.world.phys.Vec3;
 @SerialClass
 public class ItemBulletEntity extends DanmakuBulletEntity implements ItemSupplier {
 
-	private static final EntityDataAccessor<ItemStack> DATA_ITEM_STACK = SynchedEntityData.defineId(ItemBulletEntity.class, EntityDataSerializers.ITEM_STACK);
-
 	@SerialField
 	public int controlCode = 0;
 	@SerialField
 	public DanmakuMover mover = null;
+	@SerialField
+	public TrailAction afterExpiry = null;
+	@SerialField
+	public ItemStack stack = ItemStack.EMPTY;
+
+	private boolean isErased = false;
 
 	public ItemBulletEntity(EntityType<? extends ItemBulletEntity> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
@@ -43,7 +47,7 @@ public class ItemBulletEntity extends DanmakuBulletEntity implements ItemSupplie
 	}
 
 	public void setItem(ItemStack pStack) {
-		this.getEntityData().set(DATA_ITEM_STACK, pStack.copyWithCount(1));
+		stack =  pStack.copyWithCount(1);
 		refreshDimensions();
 	}
 
@@ -61,31 +65,17 @@ public class ItemBulletEntity extends DanmakuBulletEntity implements ItemSupplie
 		return super.updateVelocity(vec, pos);
 	}
 
-	@Override
-	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-		super.onSyncedDataUpdated(key);
-		if (DATA_ITEM_STACK == key) {
-			refreshDimensions();
-		}
-	}
-
-	protected ItemStack getItemRaw() {
-		return this.getEntityData().get(DATA_ITEM_STACK);
-	}
-
 	public ItemStack getItem() {
-		return this.getItemRaw();
+		return stack;
 	}
 
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
-		builder.define(DATA_ITEM_STACK, ItemStack.EMPTY);
 	}
 
 	public void addAdditionalSaveData(CompoundTag nbt) {
 		super.addAdditionalSaveData(nbt);
-		ItemStack itemstack = this.getItemRaw();
-		if (!itemstack.isEmpty()) {
-			nbt.put("Item", itemstack.save(level().registryAccess()));
+		if (!stack.isEmpty()) {
+			nbt.put("Item", stack.save(level().registryAccess()));
 		}
 
 	}
@@ -105,6 +95,17 @@ public class ItemBulletEntity extends DanmakuBulletEntity implements ItemSupplie
 		return true;
 	}
 
+	public void markErased(boolean kill) {
+		if (!isErased)
+			super.markErased(kill);
+		isErased = true;
+	}
+
+	@Override
+	public boolean isValid() {
+		return !isErased && super.isValid();
+	}
+
 	private Float sizeCache = null;
 
 	public float scale() {
@@ -114,6 +115,34 @@ public class ItemBulletEntity extends DanmakuBulletEntity implements ItemSupplie
 			}
 		}
 		return sizeCache == null ? 1 : sizeCache;
+	}
+
+	@Override
+	protected void terminate() {
+		if (afterExpiry == null) return;
+		CardHolder holder = null;
+		Entity e = getOwner();
+		if (e instanceof CardHolder h) holder = h;
+		if (holder == null) afterExpiry.execute(position(), getDeltaMovement());
+		else afterExpiry.execute(holder, position(), getDeltaMovement());
+	}
+
+	private int lastGraze = 0;
+
+	@Override
+	public void doGraze(Player entity) {
+		if (tickCount < lastGraze) return;
+		lastGraze = tickCount + 20;
+		GrazeHelper.graze(entity, this);
+	}
+
+	@Override
+	public void poof() {
+		if (!level().isClientSide()) return;
+		if (!(getItem().getItem() instanceof DanmakuItem item)) return;
+		int col = item.color.getTextColor();
+		var pos = position().add(0, getBbHeight() / 2, 0);
+		DanmakuParticleHelper.ball(level(), pos, col, getBbWidth() / 2, random);
 	}
 
 }

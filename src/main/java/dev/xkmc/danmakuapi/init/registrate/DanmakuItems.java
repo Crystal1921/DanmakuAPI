@@ -1,19 +1,26 @@
 package dev.xkmc.danmakuapi.init.registrate;
 
+import com.mojang.serialization.MapCodec;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.xkmc.danmakuapi.api.DanmakuBullet;
 import dev.xkmc.danmakuapi.api.DanmakuLaser;
 import dev.xkmc.danmakuapi.content.custom.data.HomingSpellFormData;
 import dev.xkmc.danmakuapi.content.custom.data.RingSpellFormData;
 import dev.xkmc.danmakuapi.content.custom.data.SpellDataHolder;
+import dev.xkmc.danmakuapi.content.item.CustomSpellItem;
 import dev.xkmc.danmakuapi.content.item.DanmakuItem;
 import dev.xkmc.danmakuapi.content.item.LaserItem;
+import dev.xkmc.danmakuapi.content.particle.DanmakuPoofParticleOptions;
 import dev.xkmc.danmakuapi.content.render.DisplayType;
-import dev.xkmc.danmakuapi.content.item.CustomSpellItem;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.data.DanmakuTagGen;
 import dev.xkmc.l2core.init.reg.simple.DCReg;
 import dev.xkmc.l2core.init.reg.simple.DCVal;
+import dev.xkmc.l2core.init.reg.simple.Val;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -44,7 +51,7 @@ public class DanmakuItems {
 			this.damage = damage;
 			this.display = display;
 			name = name().toLowerCase(Locale.ROOT);
-			tag = DanmakuTagGen.item(name + "_danmaku");
+			tag = DanmakuTagGen.item("danmaku/" + name);
 		}
 
 		public ItemEntry<DanmakuItem> get(DyeColor color) {
@@ -72,18 +79,19 @@ public class DanmakuItems {
 	}
 
 	public enum Laser implements DanmakuLaser {
-		LASER(1, 4);
+		LASER(1, 1, 4), PENCIL(1, 1.75f, 4);
 
 		public final String name;
 		public final TagKey<Item> tag;
-		public final float size;
+		public final float size, visualLength;
 		private final int damage;
 
-		Laser(float size, int damage) {
+		Laser(float size, float visualLength, int damage) {
 			this.size = size;
+			this.visualLength = visualLength;
 			this.damage = damage;
 			name = name().toLowerCase(Locale.ROOT);
-			tag = DanmakuTagGen.item(name);
+			tag = DanmakuTagGen.item("laser/" + name);
 		}
 
 		public ItemEntry<LaserItem> get(DyeColor color) {
@@ -94,6 +102,14 @@ public class DanmakuItems {
 			return damage;
 		}
 
+		public boolean setupLength() {
+			return this != LASER;
+		}
+
+		public float visualLength() {
+			return visualLength;
+		}
+
 	}
 
 	private static final ItemEntry<DanmakuItem>[][] DANMAKU;
@@ -101,11 +117,12 @@ public class DanmakuItems {
 
 	public static final ItemEntry<CustomSpellItem> CUSTOM_SPELL_RING, CUSTOM_SPELL_HOMING;
 
+	public static final Val<ParticleType<DanmakuPoofParticleOptions>> POOF;
+
 	private static final DCReg DC = DCReg.of(DanmakuAPI.REG);
 	public static final DCVal<SpellDataHolder> SPELL_DATA = DC.reg("spell_data", SpellDataHolder.class, true);
 
 	static {
-
 
 		CUSTOM_SPELL_RING = DanmakuAPI.REGISTRATE
 				.item("custom_spell_ring", p -> new CustomSpellItem(p.stacksTo(1), false, RingSpellFormData.FLOWER))
@@ -145,6 +162,19 @@ public class DanmakuItems {
 				LASER[t.ordinal()][e.ordinal()] = ent;
 			}
 		}
+
+		POOF = new Val.Registrate<>(DanmakuAPI.REGISTRATE.simple("danmaku_poof", Registries.PARTICLE_TYPE,
+				() -> new ParticleType<>(false) {
+					@Override
+					public MapCodec<DanmakuPoofParticleOptions> codec() {
+						return DanmakuPoofParticleOptions.CODEC;
+					}
+
+					@Override
+					public StreamCodec<? super RegistryFriendlyByteBuf, DanmakuPoofParticleOptions> streamCodec() {
+						return DanmakuPoofParticleOptions.STREAM_CODEC;
+					}
+				}));
 	}
 
 	public static void register() {
