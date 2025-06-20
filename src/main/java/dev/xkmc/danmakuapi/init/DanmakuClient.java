@@ -4,6 +4,7 @@ import dev.xkmc.danmakuapi.content.particle.DanmakuPoofParticle;
 import dev.xkmc.danmakuapi.content.item.DanmakuItemDeco;
 import dev.xkmc.danmakuapi.content.item.SpellItem;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
+import dev.xkmc.fastprojectileapi.render.ProjectileRenderHelper;
 import net.minecraft.world.item.DyeColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -24,6 +25,7 @@ public class DanmakuClient {
 			for (var e : DanmakuItems.Laser.values())
 				for (var d : DyeColor.values())
 					e.get(d).get().getTypeForRender();
+			ProjectileRenderHelper.setup();
 		});
 	}
 

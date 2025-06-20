@@ -92,7 +92,7 @@ public class DanmakuItem extends Item {
 
 	public ProjTypeHolder<? extends RenderableProjectileType<?, ?>, ?> getTypeForRender() {
 		if (render == null) {
-			var loc = DanmakuAPI.loc("textures/entities/bullet/" + type.getName() + "/" + color.getName() + ".png");
+			var loc = DanmakuAPI.loc("textures/entity/bullet/" + type.getName() + "/" + color.getName() + ".png");
 			var r = switch (type) {
 				case BUTTERFLY -> new ButterflyProjectileType(loc, type.display(), 20);
 				case SPARK -> new RotatingProjectileType(loc, type.display(), 20);

@@ -105,12 +105,12 @@ public class LaserItem extends Item {
 		if (render == null) {
 			render = switch (type) {
 				case LASER -> ProjTypeHolder.wrap(new DoubleLayerLaserType(
-						DanmakuAPI.loc("textures/entities/laser_inner.png"),
-						DanmakuAPI.loc("textures/entities/laser_outer.png"),
+						DanmakuAPI.loc("textures/entity/laser/laser_inner.png"),
+						DanmakuAPI.loc("textures/entity/laser/laser_outer.png"),
 						0xff000000 | color.getFireworkColor()));
 				case PENCIL -> ProjTypeHolder.wrap(new PencilLayerLaserType(
-						DanmakuAPI.loc("textures/entities/laser_inner.png"),
-						DanmakuAPI.loc("textures/entities/laser_outer.png"),
+						DanmakuAPI.loc("textures/entity/laser/laser_inner.png"),
+						DanmakuAPI.loc("textures/entity/laser/laser_outer.png"),
 						0xff000000 | color.getFireworkColor()));
 				default -> throw new IllegalStateException();//TODO
 			};

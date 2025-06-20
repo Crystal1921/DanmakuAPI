@@ -1,5 +1,6 @@
 package dev.xkmc.danmakuapi.content.render;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
 import dev.xkmc.fastprojectileapi.render.ProjectileRenderer;
@@ -25,8 +26,8 @@ public record SimpleProjectileType(ResourceLocation tex, DisplayType display)
 
 	@Override
 	public void create(Consumer<Ins> holder, ProjectileRenderer<?> r, SimplifiedProjectile e, PoseStack pose, float pTick) {
-		var sim4 = new Matrix4f(pose.last().pose());
-		sim4.set3x3(new Matrix4f().scale((float) Math.pow(sim4.determinant3x3(), 1 / 3d)));
+		pose.mulPose(r.cameraOrientation());
+		var sim4 = pose.last().pose();
 		int col = DanmakuRenderStates.fading(display, -1, r, e);
 		holder.accept(new Ins(sim4, col));
 	}
